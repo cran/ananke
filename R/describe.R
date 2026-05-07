@@ -21,9 +21,9 @@ setMethod(
 
     ## Laboratory code
     if (F14C) {
-      txt_uncal <- "Sample %s contains %.0f +/- %.0f F14C,"
+      txt_uncal <- tr_("Sample %s contains %.0f +/- %.0f F14C,")
     } else {
-      txt_uncal <- "Sample %s is dated to %.0f +/- %.0f BP,"
+      txt_uncal <- tr_("Sample %s is dated to %.0f +/- %.0f BP,")
     }
     msg_uncal <- sprintf(txt_uncal, lab, val, err)
 
@@ -32,18 +32,18 @@ setMethod(
     msg_cal <- lapply(
       X = hdr,
       FUN = function(x, calendar, level) {
-        if (is.null(x)) return("but is out of the calibration range of")
+        if (is.null(x)) return(tr_("but is out of the calibration range of"))
         p <- if (NROW(x) > 1) sprintf(" (%.1f%%)", x$p * 100) else ""
         msg_hdr <- sprintf("[%.0f,%.0f]%s", x$start, x$end, p)
-        txt_cal <- "calibrated to %s %s (%.1f%% HPD interval) with"
-        sprintf(txt_cal, paste0(msg_hdr, collapse = " or "), calendar, level)
+        txt_cal <- tr_("calibrated to %s %s (%.1f%% HPD interval) with")
+        sprintf(txt_cal, paste0(msg_hdr, collapse = tr_(" or ")), calendar, level)
       },
       calendar = calendar@label,
       level = level * 100
     )
 
     ## Calibration curve
-    txt_marine <- "marine reservoir offset: %.0f +/- %.0f; "
+    txt_marine <- tr_("marine reservoir offset: %.0f +/- %.0f; ")
     msg_marine <- sprintf(txt_marine, reservoir_off, reservoir_err)
     msg_marine[reservoir_off == 0] <- ""
     txt_curve <- "%s (%s%s)."
@@ -53,7 +53,7 @@ setMethod(
     msg <- paste(msg_uncal, msg_cal, msg_curve, sep = " ")
 
     ## Software
-    txt_soft <- "Calibration was computed with R %s.%s (R Core Team %s) and package ananke %s (Frerebeau %s)."
+    txt_soft <- tr_("Calibration was computed with R %s.%s (R Core Team %s) and package ananke %s (Frerebeau %s).")
     date_soft <- utils::packageDate("ananke")
     date_soft <- if (is.na(date_soft)) Sys.Date() else date_soft
     msg_soft <- sprintf(txt_soft, R.version$major, R.version$minor,

@@ -68,8 +68,10 @@ NULL
 #' Coerce to a Data Frame
 #'
 #' @inheritParams as.list
+#' @param level A length-one [`numeric`] vector giving the confidence level
+#'  (see [interval_hdr()]).
 #' @return
-#'  A [`data.frame`] with an extra `time` column.
+#'  A [`data.frame`].
 #' @example inst/examples/ex-coerce.R
 #' @author N. Frerebeau
 #' @docType methods
@@ -80,7 +82,7 @@ NULL
 
 #' Coerce to a list
 #'
-#' @param x An object.
+#' @param x An \R object.
 #' @param calendar An [`aion::TimeScale-class`] object specifying the target
 #'  calendar (see [aion::calendar()]). If `NULL`, *rata die* are returned.
 #' @param ... Currently not used.
@@ -317,7 +319,7 @@ setGeneric(
 #' @param values A [`numeric`] vector giving the radiocarbon ages or the F14C
 #'  values.
 #' @param errors A [`numeric`] vector giving the standard deviations.
-#' @param lambda A length-one [`numeric`] vector specifying the mean-life of
+#' @param tau A length-one [`numeric`] vector specifying the mean-life of
 #'  radiocarbon (defaults to 14C half-life value as introduced by Libby 1952).
 #' @param asymmetric A [`logical`] scalar: should asymmetric 14C errors be
 #'  returned (van der Plicht & Hogg, 2006)?
@@ -325,6 +327,14 @@ setGeneric(
 #'  It can be one of "`none`" (the default, no rounding) or "`stuiver`".
 #'  Any unambiguous substring can be given.
 #' @param ... Currently not used.
+#' @details
+#'  `f14c_c14()` calculates the conventional radiocarbon age:
+#'
+#'  \eqn{t = -\frac{1}{\lambda}\ln{F^{14}C} = -\tau\ln{F^{14}C}}
+#'
+#'  `c14_f14c()` calculates the inverse:
+#'
+#'  \eqn{F^{14}C = e^{-\lambda t} = e^{-\frac{t}{\tau}}}
 #' @return
 #'  A [`data.frame`].
 #' @references
@@ -346,18 +356,18 @@ setGeneric(
 NULL
 
 #' @rdname F14C
-#' @aliases BP14C_to_F14C-method
+#' @aliases c14_f14c-method
 setGeneric(
-  name = "BP14C_to_F14C",
-  def = function(values, errors, ...) standardGeneric("BP14C_to_F14C"),
+  name = "c14_f14c",
+  def = function(values, errors, ...) standardGeneric("c14_f14c"),
   valueClass = "data.frame"
 )
 
 #' @rdname F14C
-#' @aliases F14C_to_BP14C-method
+#' @aliases f14c_c14-method
 setGeneric(
-  name = "F14C_to_BP14C",
-  def = function(values, errors, ...) standardGeneric("F14C_to_BP14C"),
+  name = "f14c_c14",
+  def = function(values, errors, ...) standardGeneric("f14c_c14"),
   valueClass = "data.frame"
 )
 
@@ -408,9 +418,8 @@ setGeneric(
 #'  Any unambiguous substring can be given.
 #' @param level A length-one [`numeric`] vector giving the confidence level.
 #'  Only used if `interval` is `TRUE`.
-#' @param fixed A [`logical`] scalar: should a fixed y scale be used?
-#'  If `TRUE` (the default), ages are equally spaced along the y axis.
-#'  If `FALSE`, age `positions` are used (see [c14_calibrate()]).
+#' @param sort A [`logical`] scalar: should ages be arranged in chronological
+#'  order?
 #' @param decreasing A [`logical`] scalar: should the sort order be decreasing?
 #' @param main A [`character`] string giving a main title for the plot.
 #' @param sub A [`character`] string giving a subtitle for the plot.
@@ -425,18 +434,37 @@ setGeneric(
 #' @param panel.last An `expression` to be evaluated after plotting has taken
 #'  place but before the axes, title and box are added.
 #' @param col.density,col.interval A specification for the plotting colors.
-#' @param ... Other [graphical parameters][graphics::par] may also be passed as
-#'  arguments to this function.
+#' @param ... Further parameters to be passed to [aion::plot()].
 #' @return
 #'  `plot()` is called it for its side-effects: it results in a graphic
 #'  being displayed. Invisibly returns `x`.
 #' @example inst/examples/ex-14c-plot.R
 #' @author N. Frerebeau
-#' @docType methods
 #' @family radiocarbon tools
+#' @docType methods
 #' @name c14_plot
 #' @rdname c14_plot
 NULL
+
+#' Ridgeline Plot of Calibrated Radiocarbon Ages
+#'
+#' @inheritParams c14_plot
+#' @param fixed A [`logical`] scalar: should a fixed y scale be used?
+#'  If `TRUE` (the default), ages are equally spaced along the y axis and
+#'  arranged in chronological order. If `FALSE`, age `positions` are used
+#'  (see [c14_calibrate()]).
+#' @return
+#'  `ridgelines()` is called it for its side-effects: it results in a graphic
+#'  being displayed (invisibly returns `x`).
+#' @example inst/examples/ex-14c-ridgelines.R
+#' @author N. Frerebeau
+#' @family radiocarbon tools
+#' @docType methods
+#' @aliases ridgelines-method
+setGeneric(
+  name = "ridgelines",
+  def = function(x, ...) standardGeneric("ridgelines")
+)
 
 #' Plot a Radiocarbon Event Count Ensemble
 #'
@@ -445,15 +473,16 @@ NULL
 #'  calendar (see [aion::calendar()]). If `NULL`, *rata die* are returned.
 #' @param ... Further parameters to be passed to [graphics::image()].
 #' @return
-#'  `image()` is called it for its side-effects: it results in a graphic being
+#'  `plot()` is called it for its side-effects: it results in a graphic being
 #'  displayed (invisibly returns `x`).
 #' @references
 #'  Carleton, W. C. (2021). Evaluating Bayesian Radiocarbon‐dated Event Count
 #'  (REC) Models for the Study of Long‐term Human and Environmental Processes.
 #'  *Journal of Quaternary Science*, 36(1): 110‑23. \doi{10.1002/jqs.3256}.
+#' @example inst/examples/ex-rece.R
 #' @author N. Frerebeau
-#' @docType methods
 #' @family radiocarbon tools
+#' @docType methods
 #' @name rec_plot
 #' @rdname rec_plot
 NULL
@@ -502,13 +531,14 @@ setGeneric(
 #'  Carleton, W. C. (2021). Evaluating Bayesian Radiocarbon‐dated Event Count
 #'  (REC) Models for the Study of Long‐term Human and Environmental Processes.
 #'  *Journal of Quaternary Science*, 36(1): 110‑23. \doi{10.1002/jqs.3256}.
+#' @example inst/examples/ex-rece.R
 #' @author N. Frerebeau
 #' @family radiocarbon tools
 #' @docType methods
-#' @aliases c14_ensemble-method
+#' @aliases c14_count-method
 setGeneric(
-  name = "c14_ensemble",
-  def = function(object, ...) standardGeneric("c14_ensemble"),
+  name = "c14_count",
+  def = function(object, ...) standardGeneric("c14_count"),
   valueClass = "RECE"
 )
 
@@ -773,6 +803,24 @@ NULL
 NULL
 
 # Summary ======================================================================
+#' Object Summaries
+#'
+#' @param object A [`CalibratedAges-class`] object.
+#' @param digits An [`integer`] (or `NULL`) used for number formatting (see
+#'  [base::format()]).
+#' @param calendar An [`aion::TimeScale-class`] object specifying the target
+#'  calendar (see [aion::calendar()]). If `NULL`, *rata die* are returned.
+#' @param ... Currently not used.
+#' @return
+#'  An object of class [`table`][base::table].
+#' @example inst/examples/ex-summary.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family summary
+#' @name summary
+#' @rdname summary
+NULL
+
 #' Data Description
 #'
 #' @param x A [`CalibratedAges-class`] object.

@@ -10,7 +10,7 @@
 \S4method{median}{CalibratedAges}(x, na.rm = FALSE, ..., calendar = get_calendar())
 }
 \arguments{
-\item{x}{A \code{\linkS4class{CalibratedAges}} object.}
+\item{x}{A \code{\link[=CalibratedAges-class]{CalibratedAges}} object.}
 
 \item{na.rm}{A \code{\link{logical}} scalar: should \code{NA} values be stripped before the
 computation proceeds?}
@@ -47,11 +47,11 @@ abline(v = median(cal, calendar = CE()), lty = 2, col = "blue")
 abline(v = mean(cal, calendar = CE()), lty = 2, col = "red")
 }
 \seealso{
-Other statistics: 
-\code{\link{interval_credible}()},
-\code{\link{interval_hdr}()},
-\code{\link{mean}()},
-\code{\link{quantile}()}
+Other statistics:
+\code{\link{interval_credible}},
+\code{\link{interval_hdr}},
+\code{\link[=mean]{mean()}},
+\code{\link[=quantile]{quantile()}}
 }
 \author{
 N. Frerebeau

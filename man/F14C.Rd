@@ -3,24 +3,24 @@
 \docType{methods}
 \name{F14C}
 \alias{F14C}
-\alias{BP14C_to_F14C}
-\alias{BP14C_to_F14C-method}
-\alias{F14C_to_BP14C}
-\alias{F14C_to_BP14C-method}
-\alias{BP14C_to_F14C,numeric,numeric-method}
-\alias{F14C_to_BP14C,numeric,numeric-method}
+\alias{c14_f14c}
+\alias{c14_f14c-method}
+\alias{f14c_c14}
+\alias{f14c_c14-method}
+\alias{c14_f14c,numeric,numeric-method}
+\alias{f14c_c14,numeric,numeric-method}
 \title{F14C}
 \usage{
-BP14C_to_F14C(values, errors, ...)
+c14_f14c(values, errors, ...)
 
-F14C_to_BP14C(values, errors, ...)
+f14c_c14(values, errors, ...)
 
-\S4method{BP14C_to_F14C}{numeric,numeric}(values, errors, lambda = 8033)
+\S4method{c14_f14c}{numeric,numeric}(values, errors, tau = 8033)
 
-\S4method{F14C_to_BP14C}{numeric,numeric}(
+\S4method{f14c_c14}{numeric,numeric}(
   values,
   errors,
-  lambda = 8033,
+  tau = 8033,
   asymmetric = FALSE,
   rounding = getOption("ananke.round")
 )
@@ -33,7 +33,7 @@ values.}
 
 \item{...}{Currently not used.}
 
-\item{lambda}{A length-one \code{\link{numeric}} vector specifying the mean-life of
+\item{tau}{A length-one \code{\link{numeric}} vector specifying the mean-life of
 radiocarbon (defaults to 14C half-life value as introduced by Libby 1952).}
 
 \item{asymmetric}{A \code{\link{logical}} scalar: should asymmetric 14C errors be
@@ -49,12 +49,21 @@ A \code{\link{data.frame}}.
 \description{
 Converts F14C values to 14C ages.
 }
+\details{
+\code{f14c_c14()} calculates the conventional radiocarbon age:
+
+\eqn{t = -\frac{1}{\lambda}\ln{F^{14}C} = -\tau\ln{F^{14}C}}
+
+\code{c14_f14c()} calculates the inverse:
+
+\eqn{F^{14}C = e^{-\lambda t} = e^{-\frac{t}{\tau}}}
+}
 \examples{
 ## Asymmetric 14C errors (van der Plicht and Hogg 2006)
-F14C_to_BP14C(0.0052, 0.0006, asym = TRUE)
+f14c_c14(0.0052, 0.0006, asym = TRUE)
 
 ## Symmetric 14C errors (Bronk Ramsey 2008)
-F14C_to_BP14C(0.0052, 0.0006, asym = FALSE)
+f14c_c14(0.0052, 0.0006, asym = FALSE)
 }
 \references{
 Bronk Ramsey, C. (2008). Radiocarbon Dating: Revolutions in Understanding.
@@ -68,16 +77,17 @@ van der Plicht, J., Hogg, A. (2006). A Note on Reporting Radiocarbon.
 \doi{10.1016/j.quageo.2006.07.001}.
 }
 \seealso{
-Other radiocarbon tools: 
-\code{\link{c14_calibrate}()},
-\code{\link{c14_combine}()},
-\code{\link{c14_curve}()},
-\code{\link{c14_ensemble}()},
+Other radiocarbon tools:
+\code{\link[=c14_calibrate]{c14_calibrate()}},
+\code{\link[=c14_combine]{c14_combine()}},
+\code{\link[=c14_count]{c14_count()}},
+\code{\link[=c14_curve]{c14_curve()}},
 \code{\link{c14_plot}},
-\code{\link{c14_sample}()},
-\code{\link{c14_spd}()},
-\code{\link{c14_uncalibrate}()},
-\code{\link{rec_plot}}
+\code{\link[=c14_sample]{c14_sample()}},
+\code{\link[=c14_spd]{c14_spd()}},
+\code{\link[=c14_uncalibrate]{c14_uncalibrate()}},
+\code{\link{rec_plot}},
+\code{\link[=ridgelines]{ridgelines()}}
 }
 \author{
 N. Frerebeau

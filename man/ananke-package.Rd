@@ -10,11 +10,17 @@ Simple radiocarbon calibration and chronological analysis. This package allows t
 }
 \details{
 \tabular{ll}{
-\strong{Package:} \tab ananke \cr
-\strong{Type:} \tab Package \cr
-\strong{Version:} \tab 0.1.0 \cr
-\strong{License:} \tab GPL-3 \cr
+\strong{Version} \tab 0.2.0 \cr
+\strong{License} \tab GPL-3 \cr
+\strong{CRAN DOI} \tab \doi{10.32614/CRAN.package.ananke} \cr
+\strong{Zenodo DOI} \tab \doi{10.5281/zenodo.13236285} \cr
 }
+
+Archéosciences Bordeaux (UMR 6034)\cr
+Maison de l'Archéologie\cr
+Université Bordeaux Montaigne\cr
+F-33607 Pessac cedex\cr
+France
 }
 \section{Package options}{
 
@@ -38,26 +44,24 @@ Useful links:
 \itemize{
   \item \url{https://codeberg.org/tesselle/ananke}
   \item \url{https://packages.tesselle.org/ananke/}
+  \item \url{https://tesselle.r-universe.dev/ananke}
   \item Report bugs at \url{https://codeberg.org/tesselle/ananke/issues}
 }
 
 }
 \author{
-\strong{Full list of authors and contributors} (alphabetic order):
+\strong{Maintainer}: Nicolas Frerebeau \email{nicolas.frerebeau@u-bordeaux-montaigne.fr} (\href{https://orcid.org/0000-0001-5759-4944}{ORCID})
 
-\tabular{ll}{
-Nicolas Frerebeau \tab \emph{Université Bordeaux Montaigne, France} \cr
+Authors:
+\itemize{
+  \item Nicolas Frerebeau \email{nicolas.frerebeau@u-bordeaux-montaigne.fr} (\href{https://orcid.org/0000-0001-5759-4944}{ORCID})
 }
 
-\strong{Package maintainer}
+Other contributors:
+\itemize{
+  \item Université Bordeaux Montaigne (\href{https://ror.org/03pbgwk21}{ROR}) [funder]
+  \item CNRS (\href{https://ror.org/02feahw73}{ROR}) [funder]
+}
 
-Nicolas Frerebeau\cr
-\email{nicolas.frerebeau@u-bordeaux-montaigne.fr}
-
-Archéosciences Bordeaux (UMR 6034)\cr
-Maison de l'Archéologie\cr
-Université Bordeaux Montaigne\cr
-F-33607 Pessac cedex\cr
-France
 }
 \keyword{internal}

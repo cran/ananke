@@ -9,14 +9,14 @@
 \S4method{interval_hdr}{CalibratedAges,missing}(x, level = 0.954, ...)
 }
 \arguments{
-\item{x}{A \code{\linkS4class{CalibratedAges}} object.}
+\item{x}{A \code{\link[=CalibratedAges-class]{CalibratedAges}} object.}
 
 \item{level}{A length-one \code{\link{numeric}} vector giving the confidence level.}
 
 \item{...}{Currently not used.}
 }
 \value{
-A \code{\linkS4class{CalibratedIntervals}} object.
+A \code{\link[=CalibratedIntervals-class]{CalibratedIntervals}} object.
 }
 \description{
 Highest Density Regions
@@ -34,11 +34,14 @@ hdr68 <- interval_hdr(cal, level = 0.683)
 hdr95 <- interval_hdr(cal, level = 0.954)
 hdr99 <- interval_hdr(cal, level = 0.997)
 
-## Coerce to data.frame
+## Coerce to a data.frame
 as.data.frame(hdr95, calendar = BC())
+## Coerce to a list
+as.list(hdr95)
 
 ## Plot
-plot(cal, interval = "hdr")
+plot(hdr95, lwd = 3)
+
 }
 \references{
 Hyndman, R. J. (1996). Computing and graphing highest density regions.
@@ -47,11 +50,11 @@ Hyndman, R. J. (1996). Computing and graphing highest density regions.
 \seealso{
 \code{\link[stats:density]{stats::density()}}, \code{\link[arkhe:interval_hdr]{arkhe::interval_hdr()}}
 
-Other statistics: 
-\code{\link{interval_credible}()},
-\code{\link{mean}()},
-\code{\link{median}()},
-\code{\link{quantile}()}
+Other statistics:
+\code{\link{interval_credible}},
+\code{\link[=mean]{mean()}},
+\code{\link[=median]{median()}},
+\code{\link[=quantile]{quantile()}}
 }
 \author{
 N. Frerebeau

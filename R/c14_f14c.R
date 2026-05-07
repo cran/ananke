@@ -4,24 +4,24 @@ NULL
 
 #' @export
 #' @rdname F14C
-#' @aliases BP14C_to_F14C,numeric,numeric-method
+#' @aliases c14_f14c,numeric,numeric-method
 setMethod(
-  f = "BP14C_to_F14C",
+  f = "c14_f14c",
   signature = c(values = "numeric", errors = "numeric"),
-  definition = function(values, errors, lambda = 8033) {
-    values <- exp(values / -lambda)
-    sigma <- values * errors / lambda
+  definition = function(values, errors, tau = 8033) {
+    values <- exp(values / -tau)
+    sigma <- values * errors / tau
     data.frame(value = values, error = sigma)
   }
 )
 
 #' @export
 #' @rdname F14C
-#' @aliases F14C_to_BP14C,numeric,numeric-method
+#' @aliases f14c_c14,numeric,numeric-method
 setMethod(
-  f = "F14C_to_BP14C",
+  f = "f14c_c14",
   signature = c(values = "numeric", errors = "numeric"),
-  definition = function(values, errors, lambda = 8033, asymmetric = FALSE,
+  definition = function(values, errors, tau = 8033, asymmetric = FALSE,
                         rounding = getOption("ananke.round")) {
     ## Validation
     choices <- c("none", "stuiver")
@@ -38,13 +38,13 @@ setMethod(
 
     ## van der Plicht and Hogg 2006, eq. 6
     ## Bronk Ramsey 2008, p. 260
-    ages <- -lambda * log(values)
-    sigma <- lambda * errors / values
+    ages <- -tau * log(values)
+    sigma <- tau * errors / values
 
     sigma_plus <- sigma_minus <- sigma
     if (asymmetric) {
-      sigma_plus <- - lambda * log(values - errors) - ages
-      sigma_minus <- ages + lambda * log(values + errors)
+      sigma_plus <- - tau * log(values - errors) - ages
+      sigma_minus <- ages + tau * log(values + errors)
     }
 
     sigma_plus[below_zero | below_2sigma] <- NA_real_
@@ -52,7 +52,7 @@ setMethod(
 
     ## The reported age can be no older than the radiocarbon age of the
     ## fraction modern of the sample plus it's error
-    # limit <- -lambda * log(values + errors)
+    # limit <- -tau * log(values + errors)
     # ages[ages > limit] <- limit[ages > limit]
 
     ## Rounding

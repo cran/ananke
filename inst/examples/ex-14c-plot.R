@@ -6,7 +6,7 @@ cal <- c14_calibrate(
 )
 
 ## Specify calendar
-plot(cal, calendar = BP())
+plot(cal, calendar = BP(), flip = TRUE)
 
 ## HDR intervals (default)
 plot(cal, interval = "hdr", level = 0.95)

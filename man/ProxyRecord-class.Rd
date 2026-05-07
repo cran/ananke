@@ -12,7 +12,7 @@ An S4 class to store proxy records.
 This class inherits from \code{\link[aion:TimeSeries-class]{aion::TimeSeries}}.
 }
 \seealso{
-Other classes: 
+Other classes:
 \code{\link{CalibratedAges-class}},
 \code{\link{CalibratedIntervals-class}},
 \code{\link{CalibratedSPD-class}},

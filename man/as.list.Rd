@@ -9,7 +9,7 @@
 \S4method{as.list}{CalibratedIntervals}(x, ..., calendar = get_calendar())
 }
 \arguments{
-\item{x}{An object.}
+\item{x}{An \R object.}
 
 \item{...}{Currently not used.}
 
@@ -30,16 +30,16 @@ cal <- c14_calibrate(
   names = c("X", "Y")
 )
 
-head(as.data.frame(cal))
-head(as.data.frame(cal, calendar = BP()))
-head(as.data.frame(cal, calendar = NULL))
+as.data.frame(cal)
+
+as.data.frame(cal, calendar = BP())
 }
 \seealso{
-Other mutators: 
-\code{\link{as.data.frame}()},
-\code{\link{labels}()},
+Other mutators:
+\code{\link{as.data.frame}},
+\code{\link[=labels]{labels()}},
 \code{\link{mutators}},
-\code{\link{subset}()}
+\code{\link{subset}}
 }
 \author{
 N. Frerebeau

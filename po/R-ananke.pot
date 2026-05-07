@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ananke 0.0.1.9000\n"
-"POT-Creation-Date: 2025-04-09 13:17+0200\n"
+"Project-Id-Version: ananke 0.1.0.9000\n"
+"POT-Creation-Date: 2026-05-07 11:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,22 +22,68 @@ msgstr ""
 msgid "Date %s is out of calibration range."
 msgstr ""
 
+#: describe.R:24
+msgid "Sample %s contains %.0f +/- %.0f F14C,"
+msgstr ""
+
+#: describe.R:26
+msgid "Sample %s is dated to %.0f +/- %.0f BP,"
+msgstr ""
+
+#: describe.R:35
+msgid "but is out of the calibration range of"
+msgstr ""
+
+#: describe.R:38
+msgid "calibrated to %s %s (%.1f%% HPD interval) with"
+msgstr ""
+
+#: describe.R:39
+msgid "or"
+msgstr ""
+
+#: describe.R:46
+msgid "marine reservoir offset: %.0f +/- %.0f;"
+msgstr ""
+
+#: describe.R:56
+msgid ""
+"Calibration was computed with R %s.%s (R Core Team %s) and package ananke %s "
+"(Frerebeau %s)."
+msgstr ""
+
 #: pb_age.R:48
 msgid "Convergence not reached (possible infinite loop)."
 msgstr ""
 
-#: proxy.R:38
+#: proxy.R:39
 msgid "Computing p(t|zi) densities..."
 msgstr ""
 
-#: proxy.R:57
+#: proxy.R:58
 msgid "Computing p(x|zi) densities..."
 msgstr ""
 
-#: proxy.R:78
+#: proxy.R:79
 msgid "Computing p(x|t) densities..."
 msgstr ""
 
-#: proxy.R:94
+#: proxy.R:95
 msgid "Sampling proxy records..."
+msgstr ""
+
+#: statistics.R:163
+msgid "1st Qu."
+msgstr ""
+
+#: statistics.R:163
+msgid "Median"
+msgstr ""
+
+#: statistics.R:163
+msgid "Mean"
+msgstr ""
+
+#: statistics.R:163
+msgid "3rd Qu."
 msgstr ""

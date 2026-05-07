@@ -10,18 +10,17 @@
 \S4method{plot}{CalibratedAges,missing}(
   x,
   calendar = get_calendar(),
-  density = TRUE,
-  interval = c("hdr", "credible", "none"),
+  interval = c("hdr", "credible"),
   level = 0.954,
-  fixed = TRUE,
-  decreasing = TRUE,
+  sort = TRUE,
+  decreasing = FALSE,
   col.density = "grey",
   col.interval = "#77AADD",
   main = NULL,
   sub = NULL,
-  axes = TRUE,
-  frame.plot = FALSE,
   ann = graphics::par("ann"),
+  axes = TRUE,
+  frame.plot = TRUE,
   panel.first = NULL,
   panel.last = NULL,
   ...
@@ -34,19 +33,17 @@
   sub = NULL,
   ann = graphics::par("ann"),
   axes = TRUE,
-  frame.plot = FALSE,
+  frame.plot = TRUE,
   panel.first = NULL,
   panel.last = NULL,
   ...
 )
 }
 \arguments{
-\item{x}{A \code{\linkS4class{CalibratedAges}} or \code{\linkS4class{CalibratedSPD}} object.}
+\item{x}{A \code{\link[=CalibratedAges-class]{CalibratedAges}} or \code{\link[=CalibratedSPD-class]{CalibratedSPD}} object.}
 
 \item{calendar}{An \code{\link[aion:TimeScale-class]{aion::TimeScale}} object specifying the target
 calendar (see \code{\link[aion:calendar]{aion::calendar()}}). If \code{NULL}, \emph{rata die} are returned.}
-
-\item{density}{A \code{\link{logical}} scalar: should density be drawn?}
 
 \item{interval}{A \code{\link{character}} string specifying the intervals to be drawn.
 It must be one of "\code{hrd}" (the default), "\code{credible}" or "\code{none}".
@@ -55,9 +52,8 @@ Any unambiguous substring can be given.}
 \item{level}{A length-one \code{\link{numeric}} vector giving the confidence level.
 Only used if \code{interval} is \code{TRUE}.}
 
-\item{fixed}{A \code{\link{logical}} scalar: should a fixed y scale be used?
-If \code{TRUE} (the default), ages are equally spaced along the y axis.
-If \code{FALSE}, age \code{positions} are used (see \code{\link[=c14_calibrate]{c14_calibrate()}}).}
+\item{sort}{A \code{\link{logical}} scalar: should ages be arranged in chronological
+order?}
 
 \item{decreasing}{A \code{\link{logical}} scalar: should the sort order be decreasing?}
 
@@ -67,13 +63,13 @@ If \code{FALSE}, age \code{positions} are used (see \code{\link[=c14_calibrate]{
 
 \item{sub}{A \code{\link{character}} string giving a subtitle for the plot.}
 
+\item{ann}{A \code{\link{logical}} scalar: should the default annotation (title and x
+and y labels) appear on the plot?}
+
 \item{axes}{A \code{\link{logical}} scalar: should axes be drawn on the plot?}
 
 \item{frame.plot}{A \code{\link{logical}} scalar: should a box be drawn around the
 plot?}
-
-\item{ann}{A \code{\link{logical}} scalar: should the default annotation (title and x
-and y labels) appear on the plot?}
 
 \item{panel.first}{An an \code{expression} to be evaluated after the plot axes are
 set up but before any plotting takes place. This can be useful for drawing
@@ -82,8 +78,9 @@ background grids.}
 \item{panel.last}{An \code{expression} to be evaluated after plotting has taken
 place but before the axes, title and box are added.}
 
-\item{...}{Other \link[graphics:par]{graphical parameters} may also be passed as
-arguments to this function.}
+\item{...}{Further parameters to be passed to \code{\link[aion:plot]{aion::plot()}}.}
+
+\item{density}{A \code{\link{logical}} scalar: should density be drawn?}
 }
 \value{
 \code{plot()} is called it for its side-effects: it results in a graphic
@@ -101,7 +98,7 @@ cal <- c14_calibrate(
 )
 
 ## Specify calendar
-plot(cal, calendar = BP())
+plot(cal, calendar = BP(), flip = TRUE)
 
 ## HDR intervals (default)
 plot(cal, interval = "hdr", level = 0.95)
@@ -120,16 +117,17 @@ plot(cal, density = FALSE, level = 0.95, lwd = 5)
 plot(cal[, 1, ], col.interval = "red")
 }
 \seealso{
-Other radiocarbon tools: 
+Other radiocarbon tools:
 \code{\link{F14C}},
-\code{\link{c14_calibrate}()},
-\code{\link{c14_combine}()},
-\code{\link{c14_curve}()},
-\code{\link{c14_ensemble}()},
-\code{\link{c14_sample}()},
-\code{\link{c14_spd}()},
-\code{\link{c14_uncalibrate}()},
-\code{\link{rec_plot}}
+\code{\link[=c14_calibrate]{c14_calibrate()}},
+\code{\link[=c14_combine]{c14_combine()}},
+\code{\link[=c14_count]{c14_count()}},
+\code{\link[=c14_curve]{c14_curve()}},
+\code{\link[=c14_sample]{c14_sample()}},
+\code{\link[=c14_spd]{c14_spd()}},
+\code{\link[=c14_uncalibrate]{c14_uncalibrate()}},
+\code{\link{rec_plot}},
+\code{\link[=ridgelines]{ridgelines()}}
 }
 \author{
 N. Frerebeau

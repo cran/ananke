@@ -13,7 +13,7 @@ calibrated radiocarbon ages.
 This class inherits from \code{\link[aion:TimeSeries-class]{aion::TimeSeries}}.
 }
 \seealso{
-Other classes: 
+Other classes:
 \code{\link{CalibratedAges-class}},
 \code{\link{CalibratedIntervals-class}},
 \code{\link{ProxyRecord-class}},

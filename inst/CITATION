@@ -4,7 +4,7 @@ bibentry(
   footer       = "This package is a part of the tesselle project <https://www.tesselle.org>.",
   author       = person("Nicolas", "Frerebeau", role = "aut"),
   title        = "{ananke: Quantitative Chronology in Archaeology}",
-  year         = "2025",
+  year         = "2026",
   organization = "Université Bordeaux Montaigne",
   address      = "Pessac, France",
   note         = sprintf("R package version %s", meta$Version),

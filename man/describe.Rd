@@ -9,7 +9,7 @@
 \S4method{describe}{CalibratedAges}(x, calendar = get_calendar(), level = 0.954, ...)
 }
 \arguments{
-\item{x}{A \code{\linkS4class{CalibratedAges}} object.}
+\item{x}{A \code{\link[=CalibratedAges-class]{CalibratedAges}} object.}
 
 \item{calendar}{An \code{\link[aion:TimeScale-class]{aion::TimeScale}} object specifying the target
 calendar (see \code{\link[aion:calendar]{aion::calendar()}}).}
@@ -38,6 +38,10 @@ describe(cal)
 \references{
 Millard, A. R. (2014). Conventions for Reporting Radiocarbon Determinations.
 \emph{Radiocarbon}, 56(2): 555-559. \doi{10.2458/56.17455}.
+}
+\seealso{
+Other summary:
+\code{\link[=summary]{summary()}}
 }
 \author{
 N. Frerebeau

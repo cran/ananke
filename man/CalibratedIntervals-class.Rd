@@ -18,7 +18,7 @@ An S4 class to represent calibrated intervals of radiocarbon ages.
 This class inherits from \code{\link[aion:TimeIntervals-class]{aion::TimeIntervals}}.
 }
 \seealso{
-Other classes: 
+Other classes:
 \code{\link{CalibratedAges-class}},
 \code{\link{CalibratedSPD-class}},
 \code{\link{ProxyRecord-class}},

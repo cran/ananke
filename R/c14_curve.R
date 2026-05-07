@@ -108,7 +108,7 @@ approx_curve <- function(name, out, F14C = FALSE) {
     X = curve_data,
     FUN = function(x, xout, F14C) {
       if (F14C) {
-        x_f14c <- BP14C_to_F14C(x[, 2], x[, 3])
+        x_f14c <- c14_f14c(x[, 2], x[, 3])
         x[, 2] <- x_f14c$value
         x[, 3] <- x_f14c$error
       }

@@ -52,7 +52,7 @@ setMethod(
     crd <- apply(
       X = spl,
       MARGIN = 2,
-      FUN = interval_credible,
+      FUN = arkhe::interval_credible,
       level = level,
       simplify = FALSE
     )

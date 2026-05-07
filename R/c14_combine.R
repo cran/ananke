@@ -13,15 +13,15 @@ setMethod(
     n <- length(values)
     if (is.null(groups)) groups <- "X"
     if (length(groups) == 1) groups <- rep(groups, n)
+
+    ## Empty groups must be treated as NA
+    groups[which(!nzchar(groups))] <- NA
     groups <- factor(x = groups, levels = unique(groups))
 
     arkhe::assert_missing(values)
     arkhe::assert_missing(errors)
     arkhe::assert_length(errors, n)
     arkhe::assert_length(groups, n)
-
-    ## Empty groups must be treated as NA
-    groups[groups == ""] <- NA
 
     ## Groups with only one date must be treated as NA
     counts <- table(groups)

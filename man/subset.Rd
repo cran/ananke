@@ -25,10 +25,10 @@ A subsetted object.
 Operators acting on objects to extract or replace parts.
 }
 \seealso{
-Other mutators: 
-\code{\link{as.data.frame}()},
-\code{\link{as.list}()},
-\code{\link{labels}()},
+Other mutators:
+\code{\link{as.data.frame}},
+\code{\link[=as.list]{as.list()}},
+\code{\link[=labels]{labels()}},
 \code{\link{mutators}}
 }
 \author{

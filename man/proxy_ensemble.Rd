@@ -65,7 +65,7 @@ the temporal sequence at which densities are to be estimated (in years).}
 \item{verbose}{A \code{\link{logical}} scalar: should extra information be reported?}
 }
 \value{
-A \code{\linkS4class{ProxyRecord}} object.
+A \code{\link[=ProxyRecord-class]{ProxyRecord}} object.
 }
 \description{
 Represents layer-counted proxy records as sequences of probability
@@ -104,7 +104,7 @@ Uncertainties in Layer-Counted Paleoclimatic Archives. \emph{Climate of the
 Past}, 13(9): 1169-1180. \doi{10.5194/cp-13-1169-2017}.
 }
 \seealso{
-Other proxy tools: 
+Other proxy tools:
 \code{\link{proxy_plot}}
 }
 \author{

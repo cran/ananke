@@ -5,6 +5,5 @@ cal <- c14_calibrate(
   names = c("X", "Y")
 )
 
-as.data.frame(cal)
-
-as.data.frame(cal, calendar = BP())
+## Ridgelines plot
+ridgelines(cal, panel.first = graphics::grid())

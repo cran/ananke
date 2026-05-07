@@ -8,7 +8,15 @@ cal <- c14_calibrate(
   errors = c(45, 35),
   names = c("X", "Y")
 )
-plot(cal, panel.first = graphics::grid())
+plot(cal)
+
+## Calibrate F14C
+cal <- c14_calibrate(
+  values = 0.0062,
+  errors = 0.0006,
+  F14C = TRUE
+)
+plot(cal)
 
 \donttest{
 ## Out of 14C range?

@@ -12,7 +12,7 @@ An S4 class to represent a radiocarbon event count ensemble.
 This class inherits from \code{\link[aion:TimeSeries-class]{aion::TimeSeries}}.
 }
 \seealso{
-Other classes: 
+Other classes:
 \code{\link{CalibratedAges-class}},
 \code{\link{CalibratedIntervals-class}},
 \code{\link{CalibratedSPD-class}},

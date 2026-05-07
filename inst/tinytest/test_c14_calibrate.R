@@ -38,6 +38,8 @@ spd <- c14_spd(cal)
 expect_equal_to_reference(spd, file = "_snaps/c14_spd.rds")
 
 # Validate =====================================================================
+expect_error(c14_calibrate(52000, 200, curve = "xxx"))
+
 cal_out_lower <- c14_calibrate(52000, 200, curve = "intcal20")
 expect_warning(ananke:::c14_validate(cal_out_lower, verbose = TRUE),
                "is out of calibration range")

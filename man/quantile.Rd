@@ -20,7 +20,7 @@
 \S4method{quantile}{ProxyRecord}(x, probs = seq(0, 1, 0.25), na.rm = FALSE, ...)
 }
 \arguments{
-\item{x}{A \code{\linkS4class{CalibratedAges}} object.}
+\item{x}{A \code{\link[=CalibratedAges-class]{CalibratedAges}} object.}
 
 \item{probs}{A \code{\link{numeric}} vector of probabilities with values in
 \eqn{[0,1]}.}
@@ -60,11 +60,11 @@ abline(v = median(cal, calendar = CE()), lty = 2, col = "blue")
 abline(v = mean(cal, calendar = CE()), lty = 2, col = "red")
 }
 \seealso{
-Other statistics: 
-\code{\link{interval_credible}()},
-\code{\link{interval_hdr}()},
-\code{\link{mean}()},
-\code{\link{median}()}
+Other statistics:
+\code{\link{interval_credible}},
+\code{\link{interval_hdr}},
+\code{\link[=mean]{mean()}},
+\code{\link[=median]{median()}}
 }
 \author{
 N. Frerebeau

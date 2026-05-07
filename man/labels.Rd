@@ -21,11 +21,11 @@ Find a suitable set of labels from an object for use in printing or plotting,
 for example.
 }
 \seealso{
-Other mutators: 
-\code{\link{as.data.frame}()},
-\code{\link{as.list}()},
+Other mutators:
+\code{\link{as.data.frame}},
+\code{\link[=as.list]{as.list()}},
 \code{\link{mutators}},
-\code{\link{subset}()}
+\code{\link{subset}}
 }
 \author{
 N. Frerebeau

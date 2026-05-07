@@ -136,16 +136,17 @@ High-Precision Radiocarbon Age Calibration for Terrestrial and Marine
 Samples. \emph{Radiocarbon}, 40(3): 1127‑1151. \doi{10.1017/S0033822200019172}.
 }
 \seealso{
-Other radiocarbon tools: 
+Other radiocarbon tools:
 \code{\link{F14C}},
-\code{\link{c14_calibrate}()},
-\code{\link{c14_combine}()},
-\code{\link{c14_ensemble}()},
+\code{\link[=c14_calibrate]{c14_calibrate()}},
+\code{\link[=c14_combine]{c14_combine()}},
+\code{\link[=c14_count]{c14_count()}},
 \code{\link{c14_plot}},
-\code{\link{c14_sample}()},
-\code{\link{c14_spd}()},
-\code{\link{c14_uncalibrate}()},
-\code{\link{rec_plot}}
+\code{\link[=c14_sample]{c14_sample()}},
+\code{\link[=c14_spd]{c14_spd()}},
+\code{\link[=c14_uncalibrate]{c14_uncalibrate()}},
+\code{\link{rec_plot}},
+\code{\link[=ridgelines]{ridgelines()}}
 }
 \author{
 N. Frerebeau

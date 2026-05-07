@@ -5,12 +5,34 @@
 
 <!-- badges: start -->
 
-[![Code
-coverage](https://packages.tesselle.org/ananke/coverage/badge.svg)](https://packages.tesselle.org/ananke/coverage/)
+<a href="https://ci.codeberg.org/repos/14687" class="pkgdown-devel"><img
+src="https://ci.codeberg.org/api/badges/14687/status.svg"
+alt="status-badge" /></a>
+<a href="https://packages.tesselle.org/ananke/coverage/"
+class="pkgdown-devel"><img
+src="https://packages.tesselle.org/ananke/coverage/badge.svg"
+alt="Code coverage" /></a>
+<a href="https://cran.r-project.org/package=ananke"
+class="pkgdown-devel"><img
+src="https://tinyverse.netlify.app/badge/ananke"
+alt="Dependencies" /></a>
+
 <a href="https://tesselle.r-universe.dev/ananke"
 class="pkgdown-devel"><img
 src="https://tesselle.r-universe.dev/badges/ananke"
 alt="r-universe" /></a>
+<a href="https://cran.r-project.org/package=ananke"
+class="pkgdown-release"><img
+src="https://www.r-pkg.org/badges/version/ananke"
+alt="CRAN Version" /></a> <a
+href="https://cran.r-project.org/web/checks/check_results_ananke.html"
+class="pkgdown-release"><img
+src="https://badges.cranchecks.info/worst/ananke.svg"
+alt="CRAN checks" /></a>
+<a href="https://cran.r-project.org/package=ananke"
+class="pkgdown-release"><img
+src="https://cranlogs.r-pkg.org/badges/ananke"
+alt="CRAN Downloads" /></a>
 
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
@@ -37,10 +59,10 @@ testing and documentation may be lacking.
 
 To cite ananke in publications use:
 
-Frerebeau N (2025). *ananke: Quantitative Chronology in Archaeology*.
+Frerebeau N (2026). *ananke: Quantitative Chronology in Archaeology*.
 Université Bordeaux Montaigne, Pessac, France.
-<doi:10.5281/zenodo.13236285> <https://doi.org/10.5281/zenodo.13236285>,
-R package version 0.1.0, <https://packages.tesselle.org/ananke/>.
+<doi:10.5281/zenodo.13236285> <https://doi.org/10.5281/zenodo.13236285>.
+R package version 0.2.0, <https://packages.tesselle.org/ananke/>.
 
 This package is a part of the tesselle project
 <https://www.tesselle.org>.
@@ -77,6 +99,9 @@ internal date representation. Look at
 ## Data from Bosch et al. 2015
 data("ksarakil")
 
+## Graphical parameters
+par(mar = c(4, 6, 1, 1) + 0.1) # Adjust margins
+
 ## Calibrate multiple ages
 cal <- c14_calibrate(
   values = ksarakil$date,
@@ -88,11 +113,40 @@ cal <- c14_calibrate(
   from = 50000, to = 0
 )
 
-## Plot
-plot(cal)
+## Plot calibrated ages
+ridgelines(cal, calendar = CE())
 ```
 
 ![](man/figures/README-calibration-1.png)<!-- -->
+
+``` r
+
+## 95% intervals
+hdr95 <- interval_hdr(cal, level = 0.95)
+as.data.frame(hdr95, calendar = CE())
+#>        label  start    end    p
+#> 1  GrA-53005 -28472 -27538 0.95
+#> 2  GrA-54848 -30837 -29740 0.95
+#> 3  GrA-53006 -36920 -35614 0.95
+#> 4  GrA-57545 -38737 -37401 0.95
+#> 5  GrA-54847 -41927 -40650 0.95
+#> 6  GrA-57544 -38765 -37560 0.95
+#> 7  GrA-57598 -39991 -38970 0.95
+#> 8  GrA-57599 -41784 -40694 0.95
+#> 9  GrA-53001 -36676 -35245 0.95
+#> 10 GrA-54846 -41804 -40640 0.95
+#> 11 GrA-57602 -39504 -38384 0.95
+#> 12 GrA-57603 -40553 -39761 0.95
+#> 13 GrA-57542 -39129 -37916 0.95
+#> 14 GrA-53004 -41346 -40383 0.95
+#> 15 GrA-57597 -42000 -40766 0.95
+#> 16 GrA-53000 -42451 -41111 0.95
+
+## Plot intervals
+plot(hdr95, calendar = CE(), lwd = 2)
+```
+
+![](man/figures/README-calibration-2.png)<!-- -->
 
 ## Translation
 

@@ -3,10 +3,10 @@
 NULL
 
 #' @export
-#' @rdname c14_ensemble
-#' @aliases c14_ensemble,CalibratedAges-method
+#' @rdname c14_count
+#' @aliases c14_count,CalibratedAges-method
 setMethod(
-  f = "c14_ensemble",
+  f = "c14_count",
   signature = "CalibratedAges",
   definition = function(object, from = NULL, to = NULL, by = 10, n = 100,
                         calendar = BP(), progress = getOption("ananke.progress")) {

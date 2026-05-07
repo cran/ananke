@@ -57,16 +57,17 @@ Radiocarbon Age Determinations: A Critique. \emph{Archaeometry} 20(1): 19‑31.
 \doi{10.1111/j.1475-4754.1978.tb00208.x}.
 }
 \seealso{
-Other radiocarbon tools: 
+Other radiocarbon tools:
 \code{\link{F14C}},
-\code{\link{c14_calibrate}()},
-\code{\link{c14_curve}()},
-\code{\link{c14_ensemble}()},
+\code{\link[=c14_calibrate]{c14_calibrate()}},
+\code{\link[=c14_count]{c14_count()}},
+\code{\link[=c14_curve]{c14_curve()}},
 \code{\link{c14_plot}},
-\code{\link{c14_sample}()},
-\code{\link{c14_spd}()},
-\code{\link{c14_uncalibrate}()},
-\code{\link{rec_plot}}
+\code{\link[=c14_sample]{c14_sample()}},
+\code{\link[=c14_spd]{c14_spd()}},
+\code{\link[=c14_uncalibrate]{c14_uncalibrate()}},
+\code{\link{rec_plot}},
+\code{\link[=ridgelines]{ridgelines()}}
 }
 \author{
 N. Frerebeau

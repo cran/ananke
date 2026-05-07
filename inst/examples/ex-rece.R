@@ -12,9 +12,8 @@ cal <- c14_calibrate(
   reservoir_errors = 43,
   from = 50000, to = 0
 )
-plot(cal)
 
 ## RECE
-tmp <- c14_ensemble(cal, n = 500)
+tmp <- c14_count(cal, n = 500)
 plot(tmp, col = grDevices::hcl.colors(12, "Viridis", rev = TRUE))
 }

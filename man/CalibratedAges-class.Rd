@@ -42,7 +42,7 @@ It must be one of "\code{0}" (OK), "\code{1}" (out of calibration range) or "\co
 This class inherits from \code{\link[aion:TimeSeries-class]{aion::TimeSeries}}.
 }
 \seealso{
-Other classes: 
+Other classes:
 \code{\link{CalibratedIntervals-class}},
 \code{\link{CalibratedSPD-class}},
 \code{\link{ProxyRecord-class}},

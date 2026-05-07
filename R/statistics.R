@@ -20,7 +20,7 @@ NULL
 #' @noRd
 quantile_density <- function(x, y, probs = seq(0, 1, 0.25), na.rm = FALSE, ...) {
   eps <- 100 * .Machine$double.eps
-  if (anyNA(probs) | any(probs < -eps | probs > 1 + eps))
+  if (anyNA(probs) || any(probs < -eps | probs > 1 + eps))
     stop(sprintf("%s outside [0,1]", sQuote("probs")))
 
   q <- apply(
@@ -130,8 +130,7 @@ mean_density <- function(x, y, na.rm = FALSE, ...) {
 #' @method mean CalibratedAges
 mean.CalibratedAges <- function(x, na.rm = FALSE, ...,
                                 calendar = get_calendar()) {
-  mean_density(x = aion::time(x, calendar = calendar), y = x,
-               calendar = calendar)
+  mean_density(x = aion::time(x, calendar = calendar), y = x, na.rm = na.rm, ...)
 }
 
 #' @export
@@ -149,3 +148,31 @@ mean.ProxyRecord <- function(x, na.rm = FALSE, ...) {
 #' @rdname mean
 #' @aliases mean,ProxyRecord,missing-method
 setMethod("mean", c(x = "ProxyRecord"), mean.ProxyRecord)
+
+# Summary ======================================================================
+#' @export
+#' @method summary CalibratedAges
+summary.CalibratedAges <- function(object, ..., digits = NULL,
+                                   calendar = get_calendar()) {
+  mid <- matrix(mean(object, calendar = get_calendar()), ncol = 1)
+  qq <- quantile(object, probs = c(0.25, 0.50, 0.75), calendar = get_calendar())
+
+  sms <- t(cbind(qq[, 1L:2L, drop = FALSE], mid, qq[, 3L, drop = FALSE]))
+  sms <- format(sms, digits = digits)
+
+  lbs <- format(c(tr_("1st Qu."), tr_("Median"), tr_("Mean"), tr_("3rd Qu.")))
+  lbs <- matrix(lbs, nrow = nrow(sms), ncol = ncol(sms))
+  z <- paste0(lbs, ":", sms, "  ")
+  nm <- format(colnames(sms), justify = "centre", width = max(nchar(z)))
+
+  dim(z) <- dim(sms)
+  dimnames(z) <- list(rep("", nrow(sms)), nm)
+  attr(z, "class") <- c("table")
+
+  z
+}
+
+#' @export
+#' @rdname summary
+#' @aliases summary,CalibratedAges-method
+setMethod("summary", c(object = "CalibratedAges"), summary.CalibratedAges)

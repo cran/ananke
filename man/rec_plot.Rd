@@ -9,7 +9,7 @@
 \S4method{plot}{RECE,missing}(x, calendar = get_calendar(), ...)
 }
 \arguments{
-\item{x}{An \code{\linkS4class{RECE}} object.}
+\item{x}{An \code{\link[=RECE-class]{RECE}} object.}
 
 \item{calendar}{An \code{\link[aion:TimeScale-class]{aion::TimeScale}} object specifying the target
 calendar (see \code{\link[aion:calendar]{aion::calendar()}}). If \code{NULL}, \emph{rata die} are returned.}
@@ -17,11 +17,32 @@ calendar (see \code{\link[aion:calendar]{aion::calendar()}}). If \code{NULL}, \e
 \item{...}{Further parameters to be passed to \code{\link[graphics:image]{graphics::image()}}.}
 }
 \value{
-\code{image()} is called it for its side-effects: it results in a graphic being
+\code{plot()} is called it for its side-effects: it results in a graphic being
 displayed (invisibly returns \code{x}).
 }
 \description{
 Plot a Radiocarbon Event Count Ensemble
+}
+\examples{
+\donttest{
+## Radiocarbon data from Bosch et al. 2015
+data("ksarakil")
+
+## Calibrate
+cal <- c14_calibrate(
+  values = ksarakil$date,
+  errors = ksarakil$error,
+  names = ksarakil$code,
+  curves = "marine13",
+  reservoir_offsets = 53,
+  reservoir_errors = 43,
+  from = 50000, to = 0
+)
+
+## RECE
+tmp <- c14_count(cal, n = 500)
+plot(tmp, col = grDevices::hcl.colors(12, "Viridis", rev = TRUE))
+}
 }
 \references{
 Carleton, W. C. (2021). Evaluating Bayesian Radiocarbon‐dated Event Count
@@ -29,16 +50,17 @@ Carleton, W. C. (2021). Evaluating Bayesian Radiocarbon‐dated Event Count
 \emph{Journal of Quaternary Science}, 36(1): 110‑23. \doi{10.1002/jqs.3256}.
 }
 \seealso{
-Other radiocarbon tools: 
+Other radiocarbon tools:
 \code{\link{F14C}},
-\code{\link{c14_calibrate}()},
-\code{\link{c14_combine}()},
-\code{\link{c14_curve}()},
-\code{\link{c14_ensemble}()},
+\code{\link[=c14_calibrate]{c14_calibrate()}},
+\code{\link[=c14_combine]{c14_combine()}},
+\code{\link[=c14_count]{c14_count()}},
+\code{\link[=c14_curve]{c14_curve()}},
 \code{\link{c14_plot}},
-\code{\link{c14_sample}()},
-\code{\link{c14_spd}()},
-\code{\link{c14_uncalibrate}()}
+\code{\link[=c14_sample]{c14_sample()}},
+\code{\link[=c14_spd]{c14_spd()}},
+\code{\link[=c14_uncalibrate]{c14_uncalibrate()}},
+\code{\link[=ridgelines]{ridgelines()}}
 }
 \author{
 N. Frerebeau

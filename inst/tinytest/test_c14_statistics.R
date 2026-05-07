@@ -21,6 +21,9 @@ expect_identical(median(cal), c(X = -3778, Y = -3210))
 ## Mean
 expect_identical(ananke:::round_values_stuiver(mean(cal)), c(X = -3795, Y = -3210))
 
+## Summary
+expect_inherits(summary(cal), "table")
+
 # Sample 14C dates =============================================================
 spl <- c14_sample(cal, n = 100)
 expect_identical(dim(spl), c(100L, 2L))

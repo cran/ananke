@@ -7,7 +7,7 @@ NULL
 #' @aliases c14_calibrate,numeric,numeric-method
 setMethod(
   f = "c14_calibrate",
-  signature = signature(values = "numeric", errors = "numeric"),
+  signature = c(values = "numeric", errors = "numeric"),
   definition = function(values, errors, curves = "intcal20",
                         names = NULL, positions = NULL,
                         reservoir_offsets = 0, reservoir_errors = 0,
@@ -93,7 +93,7 @@ setMethod(
     dens <- do.call(rbind, dens)
 
     ## Normalize
-    if (F14C & !normalize) normalize <- TRUE
+    if (F14C && !normalize) normalize <- TRUE
     if (normalize) {
       dens <- dens / rowSums(dens, na.rm = TRUE)
       dens[dens < eps] <- 0
@@ -135,7 +135,8 @@ calibrate_BP14C <- function(x, error, mu, tau, df = 100, method = "student") {
   dens <- switch(
     method,
     student = stats::dt(x = (x - mu) / sqrt(tau), df = df),
-    normal = stats::dnorm(x, mean = mu, sd = sqrt(tau))
+    normal = stats::dnorm(x, mean = mu, sd = sqrt(tau)),
+    stop(sprintf("Unknown method %s.", dQuote(method)))
   )
   dens
 }

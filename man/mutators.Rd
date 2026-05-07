@@ -18,11 +18,11 @@ An object of the same sort as \code{x} with the new values assigned.
 Getters and setters to extract or replace parts of an object.
 }
 \seealso{
-Other mutators: 
-\code{\link{as.data.frame}()},
-\code{\link{as.list}()},
-\code{\link{labels}()},
-\code{\link{subset}()}
+Other mutators:
+\code{\link{as.data.frame}},
+\code{\link[=as.list]{as.list()}},
+\code{\link[=labels]{labels()}},
+\code{\link{subset}}
 }
 \author{
 N. Frerebeau

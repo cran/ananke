@@ -1,30 +1,31 @@
-if (at_home()) {
-  using("tinysnapshot")
-  options(tinysnapshot_device = "svglite")
-  options(tinysnapshot_height = 7) # inches
-  options(tinysnapshot_width = 7)
-  options(tinysnapshot_tol = 200) # pixels
-  options(tinysnapshot_os = "Linux")
+Sys.setenv(LANGUAGE = "en") # Force locale
 
-  Sys.setenv(LANGUAGE = "en") # Force locale
+using("tinysnapshot")
+source("helpers.R")
 
-  data("ksarakil")
-  cal <- c14_calibrate(
-    values = c(5000, 4500, 3000),
-    errors = c(45, 35, 35),
-    names = c("X", "Y", "Z")
-  )
+# Calibrate ====================================================================
+cal <- c14_calibrate(
+  values = c(5000, 4500, 3000),
+  errors = c(45, 35, 35),
+  names = c("X", "Y", "Z")
+)
 
-  ## Calibrate
-  plot_cal_fixed_decr <- function() plot(cal, level = 0.68, fixed = TRUE, decreasing = TRUE)
-  expect_snapshot_plot(plot_cal_fixed_decr, "plot_cal_fixed_decr")
+# Plot =========================================================================
+plot_cal_hdr_decr <- function() plot(cal, level = 0.68, decreasing = TRUE)
+expect_snapshot_plot(plot_cal_hdr_decr, "plot_cal_hdr_decr")
 
-  plot_cal_fixed_incr <- function() plot(cal, level = 0.68, fixed = TRUE, decreasing = FALSE)
-  expect_snapshot_plot(plot_cal_fixed_incr, "plot_cal_fixed_incr")
+plot_cal_hdr_incr <- function() plot(cal, level = 0.68, decreasing = FALSE)
+expect_snapshot_plot(plot_cal_hdr_incr, "plot_cal_hdr_incr")
 
-  plot_cal_pos_decr <- function() plot(cal, level = 0.68, fixed = FALSE, decreasing = TRUE)
-  expect_snapshot_plot(plot_cal_pos_decr, "plot_cal_pos_decr")
+plot_cal_cred_decr <- function() with_seed(12345, plot(cal, level = 0.68, interval = "cred", decreasing = TRUE))
+expect_snapshot_plot(plot_cal_cred_decr, "plot_cal_cred_decr")
 
-  plot_cal_pos_incr <- function() plot(cal, level = 0.68, fixed = FALSE, decreasing = FALSE)
-  expect_snapshot_plot(plot_cal_pos_incr, "plot_cal_pos_incr")
-}
+plot_cal_cred_incr <- function() with_seed(12345, plot(cal, level = 0.68, interval = "cred", decreasing = FALSE))
+expect_snapshot_plot(plot_cal_cred_incr, "plot_cal_cred_incr")
+
+# Ridgelines ===================================================================
+ridge_cal_decr <- function() ridgelines(cal, level = 0.68, fixed = TRUE, decreasing = TRUE)
+expect_snapshot_plot(ridge_cal_decr, "ridge_cal_decr")
+
+ridge_cal_incr <- function() ridgelines(cal, level = 0.68, fixed = TRUE, decreasing = FALSE)
+expect_snapshot_plot(ridge_cal_incr, "ridge_cal_incr")

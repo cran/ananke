@@ -5,6 +5,5 @@ cal <- c14_calibrate(
   names = c("X", "Y")
 )
 
-as.data.frame(cal)
-
-as.data.frame(cal, calendar = BP())
+## Summary
+summary(cal, calendar = CE())

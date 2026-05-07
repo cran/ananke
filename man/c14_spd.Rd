@@ -12,7 +12,7 @@ c14_spd(object, ...)
 \S4method{c14_spd}{CalibratedAges}(object, normalize_date = FALSE, normalize_spd = FALSE)
 }
 \arguments{
-\item{object}{A \code{\linkS4class{CalibratedAges}} object.}
+\item{object}{A \code{\link[=CalibratedAges-class]{CalibratedAges}} object.}
 
 \item{...}{Currently not used.}
 
@@ -24,7 +24,7 @@ of analysis)?}
 of the SPD be normalised (to sum to unity)?}
 }
 \value{
-A \code{\linkS4class{CalibratedSPD}} object.
+A \code{\link[=CalibratedSPD-class]{CalibratedSPD}} object.
 }
 \description{
 Computes summed probability distributions (SPD) of radiocarbon dates.
@@ -55,16 +55,17 @@ s <- c14_spd(cal)
 plot(s)
 }
 \seealso{
-Other radiocarbon tools: 
+Other radiocarbon tools:
 \code{\link{F14C}},
-\code{\link{c14_calibrate}()},
-\code{\link{c14_combine}()},
-\code{\link{c14_curve}()},
-\code{\link{c14_ensemble}()},
+\code{\link[=c14_calibrate]{c14_calibrate()}},
+\code{\link[=c14_combine]{c14_combine()}},
+\code{\link[=c14_count]{c14_count()}},
+\code{\link[=c14_curve]{c14_curve()}},
 \code{\link{c14_plot}},
-\code{\link{c14_sample}()},
-\code{\link{c14_uncalibrate}()},
-\code{\link{rec_plot}}
+\code{\link[=c14_sample]{c14_sample()}},
+\code{\link[=c14_uncalibrate]{c14_uncalibrate()}},
+\code{\link{rec_plot}},
+\code{\link[=ridgelines]{ridgelines()}}
 }
 \author{
 N. Frerebeau

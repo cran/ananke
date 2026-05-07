@@ -5,159 +5,99 @@ NULL
 ## 14C =========================================================================
 #' @export
 #' @method plot CalibratedAges
-plot.CalibratedAges <- function(x, calendar = get_calendar(), density = TRUE,
-                                interval = c("hdr", "credible", "none"),
-                                level = 0.954, fixed = TRUE, decreasing = TRUE,
+plot.CalibratedAges <- function(x, calendar = get_calendar(),
+                                interval = c("hdr", "credible"),
+                                level = 0.954, sort = TRUE, decreasing = FALSE,
                                 col.density = "grey", col.interval = "#77AADD",
                                 main = NULL, sub = NULL,
-                                axes = TRUE, frame.plot = FALSE,
                                 ann = graphics::par("ann"),
+                                axes = TRUE, frame.plot = TRUE,
                                 panel.first = NULL, panel.last = NULL, ...) {
   ## Check
   c14_validate(x)
   interval <- match.arg(interval, several.ok = FALSE)
 
+  ## Sort
+  if (isTRUE(sort)) {
+    mid <- order(mean(x, calendar = NULL), decreasing = !decreasing)
+    x <- x[, mid, , drop = FALSE]
+  }
+
   ## Graphical parameters
-  cex.axis <- list(...)$cex.axis %||% graphics::par("cex.axis")
-  col.axis <- list(...)$col.axis %||% graphics::par("col.axis")
-  font.axis <- list(...)$font.axis %||% graphics::par("font.axis")
-  if (length(col.density) == 1)
-    col.density <- rep(col.density, length.out = NCOL(x))
-  if (length(col.interval) == 1)
-    col.interval <- rep(col.interval, length.out = NCOL(x))
   fill.density <- grDevices::adjustcolor(col.density, alpha.f = 0.5)
   fill.interval <- grDevices::adjustcolor(col.interval, alpha.f = 0.5)
 
-  ## Clean
-  out <- x@status == 1L # Out of calibration range
-  x <- x[, !out, , drop = FALSE]
-  col.density <- col.density[!out]
-  fill.density <- fill.density[!out]
-  col.interval <- col.interval[!out]
-  fill.interval <- fill.interval[!out]
-
-  ## Compute interval
-  if (!identical(interval, "none")) {
-    calc_interval <- switch(
-      interval,
-      hdr = interval_hdr,
-      credible = interval_credible
-    )
-    int <- calc_interval(x, level = level)
-    int <- as.list(int, calendar = calendar)
-  }
-
-  ## Fixed vs reordered y scale
-  n <- NCOL(x)
-  pos <- x@positions
-  if (isTRUE(fixed)) pos <- order(order(pos))
-  delta <- if (!isTRUE(fixed)) diff(range(x@positions)) / n else 0.9
-
-  ## Save and restore
-  lab <- labels(x)
-  mar <- graphics::par("mar")
-  mar[2] <- inch2line(lab, cex = cex.axis) + 0.5
-  old_par <- graphics::par(mar = mar)
-  on.exit(graphics::par(old_par))
-
-  ## Open new window
-  grDevices::dev.hold()
-  on.exit(grDevices::dev.flush(), add = TRUE)
-  graphics::plot.new()
-
-  ## Set plotting coordinates
-  xlim <- range(aion::time(x, calendar = NULL))
-  ylim <- if (!isTRUE(fixed)) range(x@values) else c(1, n)
-  if (!isTRUE(decreasing)) {
-    ylim <- rev(ylim) - c(0, delta)
-  } else {
-    ylim <- ylim + c(0, delta)
-  }
-  if (!is.null(calendar)) xlim <- aion::as_year(xlim, calendar = calendar)
-  graphics::plot.window(xlim = xlim, ylim = ylim)
-
-  ## Evaluate pre-plot expressions
-  panel.first
-
   ## Plot
-  years <- aion::time(x, calendar = calendar)
-  tick_height <- graphics::par("tcl") * graphics::strheight("M") * -1
-  if (isFALSE(density)) tick_height <- 0
-  for (i in seq_len(n)) {
-    y <- x[, i, k = 1, drop = TRUE]
-    y <- (y - min(y)) / max(y - min(y)) * delta
+  panel_density <- function(x, y, ...) {
+    force(interval)
+    force(level)
+    force(fill.interval)
 
-    if (isTRUE(density)) {
-      d0 <- which(y > 0) # Keep only density > 0
-      lb <- if (min(d0) > 1) min(d0) - 1 else min(d0)
-      ub <- if (max(d0) < length(years)) max(d0) + 1 else max(d0)
-      xi <- c(years[lb], years[d0], years[ub])
-      if (!isTRUE(decreasing)) {
-        yi <- c(pos[i], pos[i] - y[d0], pos[i])
-      } else {
-        yi <- c(pos[i], y[d0] + pos[i], pos[i])
-      }
+    tick_bottom <- min(y, na.rm = TRUE)
+    tick_height <- tick_bottom + graphics::par("tcl") * graphics::strheight("M") * -1
 
-      graphics::polygon(xi, yi, border = NA, col = fill.density[i])
-      graphics::lines(xi, yi, lty = "solid")
-    }
+    ## Keep only density > 0
+    d0 <- which(y > tick_bottom)
+    x <- x[d0]
+    y <- y[d0]
 
-    if (!identical(interval, "none")) {
-      h <- int[[i]]
+    ## Draw density
+    graphics::polygon(
+      x = c(x, rev(x)),
+      y = c(y, rep(tick_bottom, length(y))),
+      border = NA,
+      ...
+    )
 
-      if (isTRUE(density)) {
-        for (j in seq_len(nrow(h))) {
-          debut <- h[j, "start"]
-          fin <- h[j, "end"]
-          if (debut < fin) is_in_h <- xi >= debut & xi <= fin
-          else is_in_h <- xi <= debut & xi >= fin
-          xh <- xi[is_in_h]
-          yh <- yi[is_in_h]
-          graphics::polygon(
-            x = c(xh[1], xh, xh[length(xh)]),
-            y = c(pos[i], yh, pos[i]),
-            border = NA, col = fill.interval[i]
-          )
+    ## Add interval
+    if (level > 0) {
+      y0 <- arkhe::scale_range(y)
+      int <- switch(
+        interval,
+        hdr = arkhe::interval_hdr(x, y0, level = level),
+        credible = {
+          spl <- sample(x, size = length(x), replace = TRUE, prob = y0)
+          arkhe::interval_credible(spl, level = level)
         }
-      }
-
-      params <- list(x0 = h[, "start"], x1 = h[, "end"],
-                     y0 = pos[i], y1 = pos[i], lend = 1)
-      dots <- list(...)
-      dots <- utils::modifyList(dots, params)
-      if (isFALSE(density)) dots$col <- col.interval[i]
-      do.call(graphics::segments, dots)
-      graphics::segments(
-        x0 = c(h[, "start"], h[, "end"]),
-        x1 = c(h[, "start"], h[, "end"]),
-        y0 = pos[i], y1 = pos[i] + tick_height,
-        lend = 1, ...
       )
+
+      for (i in seq_len(nrow(int))) {
+        debut <- int[i, "start"]
+        fin <- int[i, "end"]
+        if (debut < fin) is_in_int <- which(x >= debut & x <= fin)
+        else is_in_int <- which(x <= debut & x >= fin)
+        xi <- x[is_in_int]
+        yi <- y[is_in_int]
+        graphics::polygon(
+          x = c(xi[1], xi, xi[length(xi)]),
+          y = c(tick_bottom, yi, tick_bottom),
+          border = NA, col = fill.interval
+        )
+        graphics::segments(
+          x0 = c(debut, debut, fin),
+          x1 = c(debut, fin, fin),
+          y0 = c(tick_bottom, tick_bottom, tick_bottom),
+          y1 = c(tick_height, tick_bottom, tick_height),
+          lend = 1
+        )
+      }
     }
+
+    graphics::lines(x, y, col = "black")
   }
 
-  ## Evaluate post-plot and pre-axis expressions
-  panel.last
-
-  ## Construct Axis
-  if (axes) {
-    aion::year_axis(side = 1, format = TRUE, calendar = calendar,
-                    current_calendar = calendar)
-    graphics::axis(side = 2, at = pos, labels = lab, las = 2,
-                   lty = 0, cex.axis = cex.axis, col.axis = col.axis,
-                   font.axis = font.axis)
-  }
-
-  ## Plot frame
-  if (frame.plot) {
-    graphics::box()
-  }
-
-  ## Add annotation
-  if (ann) {
-    xlab <- if (is.null(calendar)) expression(italic("rata die")) else format(calendar)
-    graphics::title(main = main, sub = sub, xlab = xlab, ylab = NULL)
-  }
+  ## Method for TimeSeries
+  methods::callNextMethod(
+    x, facet = "multiple",
+    calendar = calendar,
+    panel = panel_density,
+    main = main, sub = sub, ann = ann, axes = axes,
+    frame.plot = frame.plot,
+    panel.first = panel.first,
+    panel.last = panel.last,
+    col = fill.density,
+    ...
+  )
 
   invisible(x)
 }
@@ -167,28 +107,71 @@ plot.CalibratedAges <- function(x, calendar = get_calendar(), density = TRUE,
 #' @aliases plot,CalibratedAges,missing-method
 setMethod("plot", c(x = "CalibratedAges", y = "missing"), plot.CalibratedAges)
 
+#' @export
+#' @rdname ridgelines
+#' @aliases ridgelines,CalibratedAges-method
+setMethod(
+  f = "ridgelines",
+  signature = c(x = "CalibratedAges"),
+  definition = function(x, calendar = get_calendar(),
+                        interval = c("hdr", "credible"),
+                        level = 0.954, fixed = TRUE, decreasing = FALSE,
+                        col.density = "grey", col.interval = "#77AADD", ...) {
+    ## Get data
+    lab <- labels(x)
+
+    ## Y scale
+    if (isTRUE(fixed)) {
+      mid <- mean(x, calendar = NULL)
+      dy <- order(order(mid, decreasing = decreasing))
+    } else {
+      dy <- order(order(x@positions, decreasing = !decreasing))
+    }
+    for (j in seq_len(ncol(x))) x[, j, ] <- arkhe::scale_range(x[, j, ]) + dy[j]
+
+    ## Permute
+    x <- aion::flip(x)
+
+    ## Plot
+    plot(x, calendar = calendar, interval = interval, level = level,
+         sort = FALSE, col.density = col.density,
+         col.interval = col.interval,
+         axes = FALSE, frame.plot = FALSE, yaxt = "n", ...)
+
+    ## Construct Axis
+    aion::year_axis(side = 1, format = TRUE, calendar = calendar,
+                    xpd = NA)
+    graphics::axis(side = 2, at = dy, labels = lab, las = 2,
+                   lty = 0)
+  }
+)
+
 ## SPD =========================================================================
 #' @export
 #' @method plot CalibratedSPD
 plot.CalibratedSPD <- function(x, calendar = get_calendar(),
                                main = NULL, sub = NULL,
                                ann = graphics::par("ann"),
-                               axes = TRUE, frame.plot = FALSE,
+                               axes = TRUE, frame.plot = TRUE,
                                panel.first = NULL, panel.last = NULL, ...) {
-  n <- NCOL(x)
-
   ## Graphical parameters
+  n <- NCOL(x)
   col <- list(...)$col %||% c("grey")
   if (length(col) != n) col <- rep(col, length.out = n)
   col <- grDevices::adjustcolor(col, alpha.f = 0.5)
 
   ## Plot
   panel_density <- function(x, y, ...) {
-    graphics::polygon(x = c(x, rev(x)), y = c(y, rep(0, length(y))),
-                      border = NA, ...)
+    graphics::polygon(
+      x = c(x, rev(x)),
+      y = c(y, rep(0, length(y))),
+      border = NA,
+      ...
+    )
     graphics::lines(x, y, col = "black")
   }
 
+  ## Method for TimeSeries
   methods::callNextMethod(
     x, facet = "multiple",
     calendar = calendar,

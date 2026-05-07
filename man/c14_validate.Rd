@@ -7,7 +7,7 @@
 c14_validate(object, verbose = getOption("ananke.verbose"))
 }
 \arguments{
-\item{object}{A \code{\linkS4class{CalibratedAges}} object.}
+\item{object}{A \code{\link[=CalibratedAges-class]{CalibratedAges}} object.}
 
 \item{verbose}{A \code{\link{logical}} scalar: should extra information be reported?}
 }
@@ -30,7 +30,15 @@ cal <- c14_calibrate(
   errors = c(45, 35),
   names = c("X", "Y")
 )
-plot(cal, panel.first = graphics::grid())
+plot(cal)
+
+## Calibrate F14C
+cal <- c14_calibrate(
+  values = 0.0062,
+  errors = 0.0006,
+  F14C = TRUE
+)
+plot(cal)
 
 \donttest{
 ## Out of 14C range?

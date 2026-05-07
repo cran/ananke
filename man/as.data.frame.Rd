@@ -9,7 +9,7 @@
 \alias{as.data.frame,ProxyRecord-method}
 \title{Coerce to a Data Frame}
 \usage{
-\S4method{as.data.frame}{CalibratedAges}(x, ..., calendar = get_calendar())
+\S4method{as.data.frame}{CalibratedAges}(x, ..., level = 0.954, calendar = get_calendar())
 
 \S4method{as.data.frame}{CalibratedIntervals}(x, ..., calendar = get_calendar())
 
@@ -18,15 +18,18 @@
 \S4method{as.data.frame}{ProxyRecord}(x, ..., calendar = get_calendar())
 }
 \arguments{
-\item{x}{An object.}
+\item{x}{An \R object.}
 
 \item{...}{Currently not used.}
+
+\item{level}{A length-one \code{\link{numeric}} vector giving the confidence level
+(see \code{\link[=interval_hdr]{interval_hdr()}}).}
 
 \item{calendar}{An \code{\link[aion:TimeScale-class]{aion::TimeScale}} object specifying the target
 calendar (see \code{\link[aion:calendar]{aion::calendar()}}). If \code{NULL}, \emph{rata die} are returned.}
 }
 \value{
-A \code{\link{data.frame}} with an extra \code{time} column.
+A \code{\link{data.frame}}.
 }
 \description{
 Coerce to a Data Frame
@@ -39,16 +42,16 @@ cal <- c14_calibrate(
   names = c("X", "Y")
 )
 
-head(as.data.frame(cal))
-head(as.data.frame(cal, calendar = BP()))
-head(as.data.frame(cal, calendar = NULL))
+as.data.frame(cal)
+
+as.data.frame(cal, calendar = BP())
 }
 \seealso{
-Other mutators: 
-\code{\link{as.list}()},
-\code{\link{labels}()},
+Other mutators:
+\code{\link[=as.list]{as.list()}},
+\code{\link[=labels]{labels()}},
 \code{\link{mutators}},
-\code{\link{subset}()}
+\code{\link{subset}}
 }
 \author{
 N. Frerebeau

@@ -15,11 +15,11 @@ setValidity(
     positions <- object@positions
     status <- object@status
 
-    p <- ncol(object)
+    p <- length(values)
 
     ## Validate
     cnd <- list(
-      arkhe::validate(arkhe::assert_length(values, p)),
+      # arkhe::validate(arkhe::assert_length(values, p)),
       arkhe::validate(arkhe::assert_length(errors, p)),
       arkhe::validate(arkhe::assert_length(curves, p)),
       arkhe::validate(arkhe::assert_length(reservoir_offsets, p)),
