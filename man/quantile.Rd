@@ -64,7 +64,8 @@ Other statistics:
 \code{\link{interval_credible}},
 \code{\link{interval_hdr}},
 \code{\link[=mean]{mean()}},
-\code{\link[=median]{median()}}
+\code{\link[=median]{median()}},
+\code{\link[=radialplot]{radialplot()}}
 }
 \author{
 N. Frerebeau

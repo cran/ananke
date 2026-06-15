@@ -262,7 +262,7 @@ setGeneric(
 #' @param method A [`character`] string specifying the distribution assumed for
 #'  the 14C ages. It must be one of "`student`" (the default) or "`normal`.
 #'  Only used if `F14C` is `FALSE`.
-#' @param dfs A [`character`] vector giving the degrees-of-freedom values for
+#' @param df A [`character`] vector giving the degrees-of-freedom values for
 #'  the student t-distribution associated with the calibration calculation.
 #'  Only used if `method` is "`student`".
 #' @param drop A [`logical`] scalar: should years with zero probability be
@@ -412,9 +412,8 @@ setGeneric(
 #' @param x A [`CalibratedAges-class`] or [`CalibratedSPD-class`] object.
 #' @param calendar An [`aion::TimeScale-class`] object specifying the target
 #'  calendar (see [aion::calendar()]). If `NULL`, *rata die* are returned.
-#' @param density A [`logical`] scalar: should density be drawn?
 #' @param interval A [`character`] string specifying the intervals to be drawn.
-#'  It must be one of "`hrd`" (the default), "`credible`" or "`none`".
+#'  It must be one of "`hrd`" (the default) or "`credible`".
 #'  Any unambiguous substring can be given.
 #' @param level A length-one [`numeric`] vector giving the confidence level.
 #'  Only used if `interval` is `TRUE`.
@@ -433,7 +432,7 @@ setGeneric(
 #'  background grids.
 #' @param panel.last An `expression` to be evaluated after plotting has taken
 #'  place but before the axes, title and box are added.
-#' @param col.density,col.interval A specification for the plotting colors.
+#' @param col A specification for the plotting colors.
 #' @param ... Further parameters to be passed to [aion::plot()].
 #' @return
 #'  `plot()` is called it for its side-effects: it results in a graphic
@@ -801,6 +800,52 @@ NULL
 #' @name median
 #' @rdname median
 NULL
+
+#' Radial Plot
+#'
+#' @param values A [`numeric`] vector giving the BP ages or F14C values to be
+#'  calibrated (conventional ages) or a [`CalibratedAges-class`] object.
+#' @param errors A [`numeric`] vector giving the errors associated to the
+#'  values to be calibrated.
+#' @param log A [`logical`] scalar: should the z-axis be displayed in
+#'  logarithmic scale?
+#' @param centrality A [`character`] string specifying a measure of centrality,
+#'  used for centering the plot. It must be one of "`weighted.mean`" (the
+#'  default), "`mean`" or "`median`". Any unambiguous substring can be given.
+#' @param bar A [`logical`] scalar: should a bar showing the 2-sigma range
+#'  around the central value be displayed?
+#' @param grid A [`logical`] scalar: should a grid (originating at \eqn{[0,0]}
+#'  and stretching to the z-scale) be displayed?
+#' @param main A [`character`] string giving a main title for the plot.
+#' @param sub A [`character`] string giving a subtitle for the plot.
+#' @param ann A [`logical`] scalar: should the default annotation (title and x
+#'  and y labels) appear on the plot?
+#' @param ... Further graphical parameters to be passed to [graphics::points()].
+#' @return
+#'  `radialplot()` is called it for its side-effects: it results in a graphic
+#'  being displayed.
+#' @references
+#'  Galbraith, Rex F. (1988). Graphical Display of Estimates Having Differing
+#'  Standard Errors. *Technometrics*, 30(3): 271-281.
+#'  \doi{10.1080/00401706.1988.10488400}.
+#'
+#'  Galbraith, Rex F. (1990). The Radial Plot: Graphical Assessment of Spread
+#'  in Ages. *International Journal of Radiation Applications and
+#'  Instrumentation. Part D. Nuclear Tracks and Radiation Measurements*,
+#'  17(3): 207-214. \doi{10.1016/1359-0189(90)90036-W}.
+#'
+#'  Galbraith, Rex F. (1994). Some Applications of Radial Plots. *Journal of
+#'  the American Statistical Association*, 89(428): 1232-1242.
+#'  \doi{10.1080/01621459.1994.10476864}.
+#' @example inst/examples/ex-radialplot.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family statistics
+#' @export
+setGeneric(
+  name = "radialplot",
+  def = function(values, errors, ...) standardGeneric("radialplot")
+)
 
 # Summary ======================================================================
 #' Object Summaries

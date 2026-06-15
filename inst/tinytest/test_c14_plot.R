@@ -5,9 +5,10 @@ source("helpers.R")
 
 # Calibrate ====================================================================
 cal <- c14_calibrate(
-  values = c(5000, 4500, 3000),
-  errors = c(45, 35, 35),
-  names = c("X", "Y", "Z")
+  values = c(4500, 5000, 3000),
+  errors = c(35, 45, 35),
+  names = c("Y", "X", "Z"),
+  position = c(1, 3, 2)
 )
 
 # Plot =========================================================================
@@ -29,3 +30,10 @@ expect_snapshot_plot(ridge_cal_decr, "ridge_cal_decr")
 
 ridge_cal_incr <- function() ridgelines(cal, level = 0.68, fixed = TRUE, decreasing = FALSE)
 expect_snapshot_plot(ridge_cal_incr, "ridge_cal_incr")
+
+col <- c("#DC050C", "#4EB265", "#4EB265")
+ridge_cal_fixed_color <- function() ridgelines(cal, level = 0.68, fixed = TRUE, col = col)
+expect_snapshot_plot(ridge_cal_fixed_color, "ridge_cal_fixed_color")
+
+ridge_cal_position_color <- function() ridgelines(cal, level = 0.68, fixed = FALSE, col = col)
+expect_snapshot_plot(ridge_cal_position_color, "ridge_cal_position_color")

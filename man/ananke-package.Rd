@@ -10,7 +10,7 @@ Simple radiocarbon calibration and chronological analysis. This package allows t
 }
 \details{
 \tabular{ll}{
-\strong{Version} \tab 0.2.0 \cr
+\strong{Version} \tab 0.3.0 \cr
 \strong{License} \tab GPL-3 \cr
 \strong{CRAN DOI} \tab \doi{10.32614/CRAN.package.ananke} \cr
 \strong{Zenodo DOI} \tab \doi{10.5281/zenodo.13236285} \cr

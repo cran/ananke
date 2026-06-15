@@ -40,6 +40,7 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 [![DOI
 Zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.13236285.svg)](https://doi.org/10.5281/zenodo.13236285)
+[![SWH](https://archive.softwareheritage.org/badge/origin/https://codeberg.org/tesselle/ananke/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://codeberg.org/tesselle/ananke)
 <!-- badges: end -->
 
 ## Overview
@@ -62,7 +63,7 @@ To cite ananke in publications use:
 Frerebeau N (2026). *ananke: Quantitative Chronology in Archaeology*.
 Université Bordeaux Montaigne, Pessac, France.
 <doi:10.5281/zenodo.13236285> <https://doi.org/10.5281/zenodo.13236285>.
-R package version 0.2.0, <https://packages.tesselle.org/ananke/>.
+R package version 0.3.0, <https://packages.tesselle.org/ananke/>.
 
 This package is a part of the tesselle project
 <https://www.tesselle.org>.
@@ -86,9 +87,13 @@ remotes::install_git("https://codeberg.org/tesselle/ananke")
 ## Usage
 
 ``` r
+# Install extra package, if needed
+# install.packages("khroma")
+
 ## Load packages
 library(ananke)
 #> Loading required package: aion
+library(khroma)
 ```
 
 **ananke** uses [**aion**](https://packages.tesselle.org/aion/) for
@@ -114,7 +119,11 @@ cal <- c14_calibrate(
 )
 
 ## Plot calibrated ages
-ridgelines(cal, calendar = CE())
+ridgelines(
+  x = cal, 
+  calendar = CE(), 
+  col = palette_color_picker("bright")(ksarakil$phase)
+)
 ```
 
 ![](man/figures/README-calibration-1.png)<!-- -->
@@ -143,7 +152,12 @@ as.data.frame(hdr95, calendar = CE())
 #> 16 GrA-53000 -42451 -41111 0.95
 
 ## Plot intervals
-plot(hdr95, calendar = CE(), lwd = 2)
+plot(
+  x = hdr95,
+  calendar = CE(),
+  col = palette_color_picker("bright")(ksarakil$phase),
+  lwd = 2
+)
 ```
 
 ![](man/figures/README-calibration-2.png)<!-- -->
@@ -185,8 +199,7 @@ to this project, you agree to abide by its terms.
 
 ## References
 
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 
 <div id="ref-albarede2012" class="csl-entry">
 
@@ -206,7 +219,7 @@ Albarède, F., and M. Juteau. 1984. “Unscrambling the Lead Model Ages.”
 
 <div id="ref-allegre2005" class="csl-entry">
 
-Allègre, Claude. 2005. *Géologie isotopique*. Belin sup. Paris: Belin.
+Allègre, Claude. 2005. *Géologie isotopique*. Belin sup. Belin.
 
 </div>
 
@@ -227,29 +240,58 @@ Understanding.” *Archaeometry* 50 (2): 249–75.
 
 </div>
 
+<div id="ref-bronkramsey2009" class="csl-entry">
+
+Bronk Ramsey, Christopher. 2009. “Bayesian Analysis of Radiocarbon
+Dates.” *Radiocarbon* 51 (1): 337–60.
+
+</div>
+
 <div id="ref-carleton2021" class="csl-entry">
 
-Carleton, W. Christopher. 2021. “Evaluating Bayesian Radiocarbon‐dated
-Event Count (REC) Models for the Study of Long‐term Human and
+Carleton, W. Christopher. 2021. “Evaluating Bayesian Radiocarbon-Dated
+Event Count (REC) Models for the Study of Long-Term Human and
 Environmental Processes.” *Journal of Quaternary Science* 36 (1):
 110–23. <https://doi.org/10.1002/jqs.3256>.
 
 </div>
 
+<div id="ref-galbraith1988" class="csl-entry">
+
+Galbraith, Rex F. 1988. “Graphical Display of Estimates Having Differing
+Standard Errors.” *Technometrics* 30 (3): 271–81.
+<https://doi.org/10.1080/00401706.1988.10488400>.
+
+</div>
+
+<div id="ref-galbraith1990" class="csl-entry">
+
+Galbraith, Rex F. 1990. “The Radial Plot: Graphical Assessment of Spread
+in Ages.” *International Journal of Radiation Applications and
+Instrumentation. Part D. Nuclear Tracks and Radiation Measurements* 17
+(3): 207–14. <https://doi.org/10.1016/1359-0189(90)90036-W>.
+
+</div>
+
+<div id="ref-galbraith1994" class="csl-entry">
+
+Galbraith, Rex F. 1994. “Some Applications of Radial Plots.” *Journal of
+the American Statistical Association* 89 (428): 1232–42.
+<https://doi.org/10.1080/01621459.1994.10476864>.
+
+</div>
+
 <div id="ref-heaton2020" class="csl-entry">
 
-Heaton, Timothy J, Peter Köhler, Martin Butzin, Edouard Bard, Ron W
-Reimer, William E N Austin, Christopher Bronk Ramsey, et al. 2020.
-“Marine20 The Marine Radiocarbon Age Calibration Curve (0–55,000 Cal
-BP).” *Radiocarbon* 62 (4): 779–820.
-<https://doi.org/10.1017/RDC.2020.68>.
+Heaton, Timothy J, Peter Köhler, Martin Butzin, et al. 2020. “Marine20
+The Marine Radiocarbon Age Calibration Curve (0–55,000 Cal BP).”
+*Radiocarbon* 62 (4): 779–820. <https://doi.org/10.1017/RDC.2020.68>.
 
 </div>
 
 <div id="ref-hogg2020" class="csl-entry">
 
-Hogg, Alan G, Timothy J Heaton, Quan Hua, Jonathan G Palmer, Chris SM
-Turney, John Southon, Alex Bayliss, et al. 2020. “SHCal20 Southern
+Hogg, Alan G, Timothy J Heaton, Quan Hua, et al. 2020. “SHCal20 Southern
 Hemisphere Calibration, 0–55,000 Years Cal BP.” *Radiocarbon* 62 (4):
 759–78. <https://doi.org/10.1017/RDC.2020.59>.
 
@@ -257,10 +299,9 @@ Hemisphere Calibration, 0–55,000 Years Cal BP.” *Radiocarbon* 62 (4):
 
 <div id="ref-hogg2013" class="csl-entry">
 
-Hogg, Alan G, Quan Hua, Paul G Blackwell, Mu Niu, Caitlin E Buck, Thomas
-P Guilderson, Timothy J Heaton, et al. 2013. “SHCal13 Southern
+Hogg, Alan G, Quan Hua, Paul G Blackwell, et al. 2013. “SHCal13 Southern
 Hemisphere Calibration, 0–50,000 Years Cal BP.” *Radiocarbon* 55 (4):
-1889–1903. <https://doi.org/10.2458/azu_js_rc.55.16783>.
+1889–903. <https://doi.org/10.2458/azu_js_rc.55.16783>.
 
 </div>
 
@@ -283,28 +324,26 @@ Radiocarbon for the Period 1950–2010.” *Radiocarbon* 55 (4): 2059–72.
 
 <div id="ref-hua2022" class="csl-entry">
 
-Hua, Quan, Jocelyn C Turnbull, Guaciara M Santos, Andrzej Z Rakowski,
-Santiago Ancapichún, Ricardo De Pol-Holz, Samuel Hammer, et al. 2022.
+Hua, Quan, Jocelyn C Turnbull, Guaciara M Santos, et al. 2022.
 “Atmospheric Radiocarbon for the Period 1950–2019.” *Radiocarbon* 64
 (4): 723–45. <https://doi.org/10.1017/RDC.2021.95>.
 
 </div>
 
-<div id="ref-hughen2004a" class="csl-entry">
+<div id="ref-hughen2004" class="csl-entry">
 
-Hughen, K., S. Lehman, J. Southon, J. Overpeck, O. Marchal, C. Herring,
-and J. Turnbull. 2004. “14C Activity and Global Carbon Cycle Changes
-over the Past 50,000 Years.” *Science* 303 (5655): 202–7.
-<https://doi.org/10.1126/science.1090300>.
+Hughen, K., S. Lehman, J. Southon, et al. 2004. “14C Activity and Global
+Carbon Cycle Changes over the Past 50,000 Years.” *Science* 303 (5655):
+202–7. <https://doi.org/10.1126/science.1090300>.
 
 </div>
 
-<div id="ref-hughen2004" class="csl-entry">
+<div id="ref-hughen2004a" class="csl-entry">
 
-Hughen, Konrad A, Mike G L Baillie, Edouard Bard, J Warren Beck, Chanda
-J H Bertrand, Paul G Blackwell, Caitlin E Buck, et al. 2004. “Marine04
-Marine Radiocarbon Age Calibration, 0–26 Cal Kyr BP.” *Radiocarbon* 46
-(3): 1059–86. <https://doi.org/10.1017/S0033822200033002>.
+<span class="nocase">Hughen, Konrad A, Mike G L Baillie, Edouard Bard,
+et al.</span> 2004. “Marine04 Marine Radiocarbon Age Calibration, 0–26
+Cal Kyr BP.” *Radiocarbon* 46 (3): 1059–86.
+<https://doi.org/10.1017/S0033822200033002>.
 
 </div>
 
@@ -342,48 +381,38 @@ Determinations.” *Radiocarbon* 56 (2): 555–59.
 
 </div>
 
-<div id="ref-vanderplicht2006" class="csl-entry">
-
-Plicht, J van der, and A Hogg. 2006. “A Note on Reporting Radiocarbon.”
-*Quaternary Geochronology* 1 (4): 237–40.
-<https://doi.org/10.1016/j.quageo.2006.07.001>.
-
-</div>
-
 <div id="ref-reimer2009" class="csl-entry">
 
-Reimer, P J, M G L Baillie, E Bard, A Bayliss, J W Beck, P G Blackwell,
-C Bronk Ramsey, et al. 2009. “IntCal09 and Marine09 Radiocarbon Age
-Calibration Curves, 0–50,000 Years Cal BP.” *Radiocarbon* 51 (4):
-1111–50. <https://doi.org/10.1017/S0033822200034202>.
+<span class="nocase">Reimer, P J, M G L Baillie, E Bard, et al.</span>
+2009. “IntCal09 and Marine09 Radiocarbon Age Calibration Curves,
+0–50,000 Years Cal BP.” *Radiocarbon* 51 (4): 1111–50.
+<https://doi.org/10.1017/S0033822200034202>.
 
 </div>
 
 <div id="ref-reimer2020" class="csl-entry">
 
-Reimer, Paula J, William E N Austin, Edouard Bard, Alex Bayliss, Paul G
-Blackwell, Christopher Bronk Ramsey, Martin Butzin, et al. 2020. “The
-IntCal20 Northern Hemisphere Radiocarbon Age Calibration Curve (0–55 Cal
-<span class="nocase">kBP</span>).” *Radiocarbon* 62 (4): 725–57.
-<https://doi.org/10.1017/RDC.2020.41>.
+<span class="nocase">Reimer, Paula J, William E N Austin, Edouard Bard,
+et al.</span> 2020. “The IntCal20 Northern Hemisphere Radiocarbon Age
+Calibration Curve (0–55 Cal <span class="nocase">kBP</span>).”
+*Radiocarbon* 62 (4): 725–57. <https://doi.org/10.1017/RDC.2020.41>.
 
 </div>
 
 <div id="ref-reimer2004" class="csl-entry">
 
-Reimer, Paula J, Mike G L Baillie, Edouard Bard, Alex Bayliss, J Warren
-Beck, Chanda J H Bertrand, Paul G Blackwell, et al. 2004. “Intcal04
-Terrestrial Radiocarbon Age Calibration, 0–26 Cal Kyr BP.” *Radiocarbon*
-46 (3): 1029–58. <https://doi.org/10.1017/S0033822200032999>.
+<span class="nocase">Reimer, Paula J, Mike G L Baillie, Edouard Bard, et
+al.</span> 2004. “Intcal04 Terrestrial Radiocarbon Age Calibration, 0–26
+Cal Kyr BP.” *Radiocarbon* 46 (3): 1029–58.
+<https://doi.org/10.1017/S0033822200032999>.
 
 </div>
 
 <div id="ref-reimer2013" class="csl-entry">
 
-Reimer, Paula J, Edouard Bard, Alex Bayliss, J Warren Beck, Paul G
-Blackwell, Christopher Bronk Ramsey, Caitlin E Buck, et al. 2013.
-“IntCal13 and Marine13 Radiocarbon Age Calibration Curves 0–50,000 Years
-Cal BP.” *Radiocarbon* 55 (4): 1869–87.
+<span class="nocase">Reimer, Paula J, Edouard Bard, Alex Bayliss, et
+al.</span> 2013. “IntCal13 and Marine13 Radiocarbon Age Calibration
+Curves 0–50,000 Years Cal BP.” *Radiocarbon* 55 (4): 1869–87.
 <https://doi.org/10.2458/azu_js_rc.55.16947>.
 
 </div>
@@ -398,10 +427,9 @@ Data.” *Radiocarbon* 19 (3): 355–63.
 
 <div id="ref-stuiver1998" class="csl-entry">
 
-Stuiver, Minze, Paula J. Reimer, Edouard Bard, J. Warren Beck, G. S.
-Burr, Konrad A. Hughen, Bernd Kromer, Gerry McCormac, Johannes van der
-Plicht, and Marco Spurk. 1998. “INTCAL98 Radiocarbon Age Calibration,
-24,000–0 Cal BP.” *Radiocarbon* 40 (3): 1041–83.
+<span class="nocase">Stuiver, Minze, Paula J. Reimer, Edouard Bard, et
+al.</span> 1998. “INTCAL98 Radiocarbon Age Calibration, 24,000–0 Cal
+BP.” *Radiocarbon* 40 (3): 1041–83.
 <https://doi.org/10.1017/S0033822200019123>.
 
 </div>
@@ -412,6 +440,14 @@ Stuiver, Minze, Paula J. Reimer, and Thomas F. Braziunas. 1998.
 “High-Precision Radiocarbon Age Calibration for Terrestrial and Marine
 Samples.” *Radiocarbon* 40 (3): 1127–51.
 <https://doi.org/10.1017/S0033822200019172>.
+
+</div>
+
+<div id="ref-vanderplicht2006" class="csl-entry">
+
+<span class="nocase">van der Plicht, J, and A Hogg</span>. 2006. “A Note
+on Reporting Radiocarbon.” *Quaternary Geochronology* 1 (4): 237–40.
+<https://doi.org/10.1016/j.quageo.2006.07.001>.
 
 </div>
 

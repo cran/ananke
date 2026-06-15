@@ -14,8 +14,7 @@
   level = 0.954,
   sort = TRUE,
   decreasing = FALSE,
-  col.density = "grey",
-  col.interval = "#77AADD",
+  col = "grey",
   main = NULL,
   sub = NULL,
   ann = graphics::par("ann"),
@@ -46,7 +45,7 @@
 calendar (see \code{\link[aion:calendar]{aion::calendar()}}). If \code{NULL}, \emph{rata die} are returned.}
 
 \item{interval}{A \code{\link{character}} string specifying the intervals to be drawn.
-It must be one of "\code{hrd}" (the default), "\code{credible}" or "\code{none}".
+It must be one of "\code{hrd}" (the default) or "\code{credible}".
 Any unambiguous substring can be given.}
 
 \item{level}{A length-one \code{\link{numeric}} vector giving the confidence level.
@@ -57,7 +56,7 @@ order?}
 
 \item{decreasing}{A \code{\link{logical}} scalar: should the sort order be decreasing?}
 
-\item{col.density, col.interval}{A specification for the plotting colors.}
+\item{col}{A specification for the plotting colors.}
 
 \item{main}{A \code{\link{character}} string giving a main title for the plot.}
 
@@ -79,8 +78,6 @@ background grids.}
 place but before the axes, title and box are added.}
 
 \item{...}{Further parameters to be passed to \code{\link[aion:plot]{aion::plot()}}.}
-
-\item{density}{A \code{\link{logical}} scalar: should density be drawn?}
 }
 \value{
 \code{plot()} is called it for its side-effects: it results in a graphic
@@ -98,7 +95,7 @@ cal <- c14_calibrate(
 )
 
 ## Specify calendar
-plot(cal, calendar = BP(), flip = TRUE)
+plot(cal, calendar = b2k(), flip = TRUE)
 
 ## HDR intervals (default)
 plot(cal, interval = "hdr", level = 0.95)
@@ -107,14 +104,7 @@ plot(cal, interval = "hdr", level = 0.95)
 plot(cal, interval = "credible", level = 0.95)
 
 ## No intervals
-plot(cal, interval = NULL)
-
-## Intervals only
-plot(cal, density = FALSE, level = 0.68, lwd = 5)
-plot(cal, density = FALSE, level = 0.95, lwd = 5)
-
-## Change colors
-plot(cal[, 1, ], col.interval = "red")
+plot(cal, level = 0)
 }
 \seealso{
 Other radiocarbon tools:

@@ -1,3 +1,11 @@
+# ananke 0.3.0
+## New classes and methods
+* Add `radialplot()` to produce a radial plot.
+
+## Bugfixes & changes
+* Fix `as.data.frame()` method for `CalibratedAges`.
+* Fix color mapping in `ridgelines()`.
+
 # ananke 0.2.0
 ## New classes and methods
 * Add `ridgelines()` to produce a ridgeline plot of calibrated radiocarbon ages.

@@ -22,10 +22,10 @@ setMethod("as.list", "CalibratedIntervals", as.list.CalibratedIntervals)
 #' @method as.data.frame CalibratedAges
 as.data.frame.CalibratedAges <- function(x, ..., level = 0.954,
                                          calendar = get_calendar()) {
-  lab <- labels(x)
   int_hdr <- interval_hdr(x, level = level)
   int_fmt <- aion::format(int_hdr, calendar = calendar)
   int_txt <- sprintf("%s (%.1f%%)", int_fmt, int_hdr@p * 100)
+  lab <- labels(int_hdr)
   int_ls <- split(int_txt, f = factor(lab, levels = unique(lab)))
   int <- vapply(
     X = int_ls,
@@ -53,7 +53,7 @@ as.data.frame.CalibratedAges <- function(x, ..., level = 0.954,
     calibration_curve = x@curves,
     calibration_hdr = int,
     calibration = I(cal), # List column
-    row.names = lab
+    row.names = labels(x)
   )
 
   if (isTRUE(x@F14C)) {

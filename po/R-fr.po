@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ananke 0.0.1.9000\n"
-"POT-Creation-Date: 2026-05-07 11:24+0200\n"
+"POT-Creation-Date: 2026-05-11 17:58+0200\n"
 "PO-Revision-Date: 2025-06-03 15:58+0000\n"
 "Last-Translator: nfrerebeau <nicolas.frerebeau@u-bordeaux-montaigne.fr>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/tesselle/"
@@ -47,7 +47,7 @@ msgstr "ou"
 
 #: describe.R:46
 msgid "marine reservoir offset: %.0f +/- %.0f;"
-msgstr "correction de l'effet de réservoir marin: %.0f +/- %.0f;"
+msgstr "correction de l'effet de réservoir marin : %.0f +/- %.0f;"
 
 #: describe.R:56
 msgid ""
@@ -76,6 +76,26 @@ msgstr "Calcul des densités p(x|t)..."
 #: proxy.R:95
 msgid "Sampling proxy records..."
 msgstr "Échantillonnage..."
+
+#: radialplot.R:35
+msgid "At least two data points are needed."
+msgstr "Au moins deux valeurs sont nécessaires."
+
+#: radialplot.R:135
+msgid "Precision"
+msgstr "Précision"
+
+#: radialplot.R:136
+msgid "Relative standard error"
+msgstr "Erreur standard relative"
+
+#: radialplot.R:136
+msgid "Standard error"
+msgstr "Erreur standard"
+
+#: radialplot.R:137
+msgid "Standardised estimates"
+msgstr "Cote Z"
 
 #: statistics.R:163
 msgid "1st Qu."

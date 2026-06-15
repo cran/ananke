@@ -8,7 +8,7 @@ NULL
 plot.CalibratedAges <- function(x, calendar = get_calendar(),
                                 interval = c("hdr", "credible"),
                                 level = 0.954, sort = TRUE, decreasing = FALSE,
-                                col.density = "grey", col.interval = "#77AADD",
+                                col= "grey",
                                 main = NULL, sub = NULL,
                                 ann = graphics::par("ann"),
                                 axes = TRUE, frame.plot = TRUE,
@@ -23,15 +23,14 @@ plot.CalibratedAges <- function(x, calendar = get_calendar(),
     x <- x[, mid, , drop = FALSE]
   }
 
-  ## Graphical parameters
-  fill.density <- grDevices::adjustcolor(col.density, alpha.f = 0.5)
-  fill.interval <- grDevices::adjustcolor(col.interval, alpha.f = 0.5)
-
   ## Plot
-  panel_density <- function(x, y, ...) {
+  panel_density <- function(x, y, col, ...) {
     force(interval)
     force(level)
-    force(fill.interval)
+
+    ## Graphical parameters
+    fill.density <- grDevices::adjustcolor(col, alpha.f = 0.5)
+    fill.interval <- col
 
     tick_bottom <- min(y, na.rm = TRUE)
     tick_height <- tick_bottom + graphics::par("tcl") * graphics::strheight("M") * -1
@@ -46,11 +45,11 @@ plot.CalibratedAges <- function(x, calendar = get_calendar(),
       x = c(x, rev(x)),
       y = c(y, rep(tick_bottom, length(y))),
       border = NA,
-      ...
+      col = fill.density
     )
 
     ## Add interval
-    if (level > 0) {
+    if (isTRUE(level > 0)) {
       y0 <- arkhe::scale_range(y)
       int <- switch(
         interval,
@@ -95,7 +94,7 @@ plot.CalibratedAges <- function(x, calendar = get_calendar(),
     frame.plot = frame.plot,
     panel.first = panel.first,
     panel.last = panel.last,
-    col = fill.density,
+    col = col,
     ...
   )
 
@@ -116,7 +115,7 @@ setMethod(
   definition = function(x, calendar = get_calendar(),
                         interval = c("hdr", "credible"),
                         level = 0.954, fixed = TRUE, decreasing = FALSE,
-                        col.density = "grey", col.interval = "#77AADD", ...) {
+                        col = "grey", ...) {
     ## Get data
     lab <- labels(x)
 
@@ -134,15 +133,12 @@ setMethod(
 
     ## Plot
     plot(x, calendar = calendar, interval = interval, level = level,
-         sort = FALSE, col.density = col.density,
-         col.interval = col.interval,
+         sort = FALSE, col = col,
          axes = FALSE, frame.plot = FALSE, yaxt = "n", ...)
 
     ## Construct Axis
-    aion::year_axis(side = 1, format = TRUE, calendar = calendar,
-                    xpd = NA)
-    graphics::axis(side = 2, at = dy, labels = lab, las = 2,
-                   lty = 0)
+    aion::year_axis(side = 1, format = TRUE, calendar = calendar, xpd = NA)
+    graphics::axis(side = 2, at = dy, labels = lab, las = 2, lty = 0)
   }
 )
 

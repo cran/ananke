@@ -16,8 +16,7 @@ ridgelines(x, ...)
   level = 0.954,
   fixed = TRUE,
   decreasing = FALSE,
-  col.density = "grey",
-  col.interval = "#77AADD",
+  col = "grey",
   ...
 )
 }
@@ -30,7 +29,7 @@ ridgelines(x, ...)
 calendar (see \code{\link[aion:calendar]{aion::calendar()}}). If \code{NULL}, \emph{rata die} are returned.}
 
 \item{interval}{A \code{\link{character}} string specifying the intervals to be drawn.
-It must be one of "\code{hrd}" (the default), "\code{credible}" or "\code{none}".
+It must be one of "\code{hrd}" (the default) or "\code{credible}".
 Any unambiguous substring can be given.}
 
 \item{level}{A length-one \code{\link{numeric}} vector giving the confidence level.
@@ -43,7 +42,7 @@ arranged in chronological order. If \code{FALSE}, age \code{positions} are used
 
 \item{decreasing}{A \code{\link{logical}} scalar: should the sort order be decreasing?}
 
-\item{col.density, col.interval}{A specification for the plotting colors.}
+\item{col}{A specification for the plotting colors.}
 }
 \value{
 \code{ridgelines()} is called it for its side-effects: it results in a graphic
@@ -62,6 +61,9 @@ cal <- c14_calibrate(
 
 ## Ridgelines plot
 ridgelines(cal, panel.first = graphics::grid())
+
+## Change colors
+ridgelines(cal, col = c("red", "blue"))
 }
 \seealso{
 Other radiocarbon tools:

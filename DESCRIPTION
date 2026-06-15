@@ -1,6 +1,6 @@
 Package: ananke
 Title: Quantitative Chronology in Archaeology
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person("Nicolas", "Frerebeau", , "nicolas.frerebeau@u-bordeaux-montaigne.fr", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5759-4944")),
@@ -21,9 +21,9 @@ URL: https://codeberg.org/tesselle/ananke,
         https://packages.tesselle.org/ananke/,
         https://tesselle.r-universe.dev/ananke
 BugReports: https://codeberg.org/tesselle/ananke/issues
-Depends: aion (>= 1.4.0), R (>= 4.1)
+Depends: aion (>= 1.7.0), R (>= 4.1)
 Imports: arkhe (>= 1.10.0), graphics, grDevices, methods, utils
-Suggests: folio, fontquiver, knitr, markdown, rsvg, svglite,
+Suggests: folio, fontquiver, khroma, knitr, markdown, rsvg, svglite,
         tinysnapshot (>= 0.2.0), tinytest
 Encoding: UTF-8
 LazyData: true
@@ -37,14 +37,14 @@ Collate: 'AllClasses.R' 'AllGenerics.R' 'ananke-internal.R'
         'c14_count.R' 'c14_curve.R' 'c14_f14c.R' 'c14_sample.R'
         'c14_spd.R' 'c14_uncalibrate.R' 'c14_validate.R' 'coerce.R'
         'data.R' 'describe.R' 'interval.R' 'mutators.R' 'pb_age.R'
-        'plot.R' 'proxy.R' 'statistics.R' 'subset.R' 'validate.R'
-        'zzz.R'
+        'plot.R' 'proxy.R' 'radialplot.R' 'statistics.R' 'subset.R'
+        'validate.R' 'zzz.R'
 Config/roxygen2/version: 8.0.0
 NeedsCompilation: no
-Packaged: 2026-05-07 13:17:50 UTC; nfrerebeau
+Packaged: 2026-06-15 13:38:24 UTC; nfrerebeau
 Author: Nicolas Frerebeau [aut, cre] (ORCID:
     <https://orcid.org/0000-0001-5759-4944>),
   Université Bordeaux Montaigne [fnd] (ROR: <https://ror.org/03pbgwk21>),
   CNRS [fnd] (ROR: <https://ror.org/02feahw73>)
 Repository: CRAN
-Date/Publication: 2026-05-07 14:23:38 UTC
+Date/Publication: 2026-06-15 14:30:02 UTC

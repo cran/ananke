@@ -51,7 +51,8 @@ Other statistics:
 \code{\link{interval_credible}},
 \code{\link{interval_hdr}},
 \code{\link[=mean]{mean()}},
-\code{\link[=quantile]{quantile()}}
+\code{\link[=quantile]{quantile()}},
+\code{\link[=radialplot]{radialplot()}}
 }
 \author{
 N. Frerebeau

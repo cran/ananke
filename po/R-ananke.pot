@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ananke 0.1.0.9000\n"
-"POT-Creation-Date: 2026-05-07 11:24+0200\n"
+"Project-Id-Version: ananke 0.2.0.9000\n"
+"POT-Creation-Date: 2026-05-11 17:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,6 +70,26 @@ msgstr ""
 
 #: proxy.R:95
 msgid "Sampling proxy records..."
+msgstr ""
+
+#: radialplot.R:35
+msgid "At least two data points are needed."
+msgstr ""
+
+#: radialplot.R:135
+msgid "Precision"
+msgstr ""
+
+#: radialplot.R:136
+msgid "Relative standard error"
+msgstr ""
+
+#: radialplot.R:136
+msgid "Standard error"
+msgstr ""
+
+#: radialplot.R:137
+msgid "Standardised estimates"
 msgstr ""
 
 #: statistics.R:163

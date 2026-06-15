@@ -14,7 +14,7 @@ setMethod(
                         from = 55000, to = 0, resolution = 1,
                         normalize = TRUE, F14C = FALSE,
                         method = c("student", "normal"),
-                        dfs = 100, drop = TRUE, eps = 1e-06,
+                        df = 100, drop = TRUE, eps = 1e-06,
                         verbose = getOption("ananke.verbose")) {
     ## Validation
     method <- match.arg(method)
@@ -27,18 +27,22 @@ setMethod(
       reservoir_offsets <- rep(reservoir_offsets, n)
     if (length(reservoir_errors) == 1)
       reservoir_errors <- rep(reservoir_errors, n)
-    if (length(dfs) == 1)
-      dfs <- rep(dfs, n)
+    if (length(df) == 1)
+      df <- rep(df, n)
 
     arkhe::assert_missing(values)
     arkhe::assert_missing(errors)
-    arkhe::assert_unique(names)
     arkhe::assert_length(errors, n)
-    arkhe::assert_length(names, n)
     arkhe::assert_length(curves, n)
+    arkhe::assert_unique(names)
+    arkhe::assert_length(names, n)
+    arkhe::assert_length(positions, n)
     arkhe::assert_length(reservoir_offsets, n)
     arkhe::assert_length(reservoir_errors, n)
-    arkhe::assert_length(dfs, n)
+    arkhe::assert_scalar(from, "numeric")
+    arkhe::assert_scalar(to, "numeric")
+    arkhe::assert_scalar(resolution, "numeric")
+    arkhe::assert_length(df, n)
 
     ## Calibration time range
     cal_range <- seq(from = from, to = to, by = -resolution)
@@ -48,20 +52,20 @@ setMethod(
     curve_range <- approx_curve(unique(curves), out = cal_range, F14C = F14C)
 
     ## Marine reservoir offset
-    values <- values - reservoir_offsets
-    errors <- sqrt(errors^2 + reservoir_errors^2)
+    val <- values - reservoir_offsets
+    err <- sqrt(errors^2 + reservoir_errors^2)
 
     ## Calibrate
-    calibrate_fun <- if (F14C) calibrate_F14C else calibrate_BP14C
+    calibrate_fun <- if (isTRUE(F14C)) calibrate_F14C else calibrate_BP14C
     dens <- vector(mode = "list", length = n)
     status <- integer(n)
     for (i in seq_len(n)) {
       d <- calibrate_fun(
-        x = values[i],
-        error = errors[i],
+        x = val[i],
+        error = err[i],
         mu = curve_range[[curves[i]]]$mu,
         tau = curve_range[[curves[i]]]$tau,
-        df = dfs[i],
+        df = df[i],
         method = method
       )
 
@@ -75,7 +79,7 @@ setMethod(
       max_cal <- curve_range[[curves[i]]]$max
       min_cal <- curve_range[[curves[i]]]$min
 
-      if (values[[i]] >= max_cal || values[[i]] <= min_cal) {
+      if (val[[i]] >= max_cal || val[[i]] <= min_cal) {
         ## L'age à calibrer est hors de l'étendue de la courbe de calibration
         if (verbose) warning(print_out(names[[i]], maybe = FALSE), call. = FALSE)
         status[i] <- 1L
@@ -93,15 +97,15 @@ setMethod(
     dens <- do.call(rbind, dens)
 
     ## Normalize
-    if (F14C && !normalize) normalize <- TRUE
-    if (normalize) {
+    if (isTRUE(F14C) && isFALSE(normalize)) normalize <- TRUE
+    if (isTRUE(normalize)) {
       dens <- dens / rowSums(dens, na.rm = TRUE)
       dens[dens < eps] <- 0
       dens <- dens / rowSums(dens, na.rm = TRUE)
     }
 
     ## Drop
-    if (drop) {
+    if (isTRUE(drop)) {
       keep_zero <- colSums(dens, na.rm = TRUE) > 0
       keep_from <- which.max(keep_zero) # First TRUE
       keep_to <- length(keep_zero) - which.max(rev(keep_zero)) + 1 # Last TRUE

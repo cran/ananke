@@ -7,7 +7,7 @@ NULL
 #' @aliases describe,CalibratedAges-method
 setMethod(
   f = "describe",
-  signature = signature(x = "CalibratedAges"),
+  signature = c(x = "CalibratedAges"),
   definition = function(x, calendar = get_calendar(),
                         level = 0.954, ...) {
     ## Get data

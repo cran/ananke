@@ -23,7 +23,7 @@ c14_calibrate(values, errors, ...)
   normalize = TRUE,
   F14C = FALSE,
   method = c("student", "normal"),
-  dfs = 100,
+  df = 100,
   drop = TRUE,
   eps = 1e-06,
   verbose = getOption("ananke.verbose")
@@ -71,7 +71,7 @@ F14C space? If \code{TRUE}, \code{values} must be expressed as F14C.}
 the 14C ages. It must be one of "\code{student}" (the default) or "\code{normal}.
 Only used if \code{F14C} is \code{FALSE}.}
 
-\item{dfs}{A \code{\link{character}} vector giving the degrees-of-freedom values for
+\item{df}{A \code{\link{character}} vector giving the degrees-of-freedom values for
 the student t-distribution associated with the calibration calculation.
 Only used if \code{method} is "\code{student}".}
 

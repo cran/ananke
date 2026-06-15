@@ -7,3 +7,6 @@ cal <- c14_calibrate(
 
 ## Ridgelines plot
 ridgelines(cal, panel.first = graphics::grid())
+
+## Change colors
+ridgelines(cal, col = c("red", "blue"))
